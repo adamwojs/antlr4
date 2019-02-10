@@ -1,0 +1,34 @@
+{
+  "name": "adamwojs/antlr4-runtime",
+  "type": "library",
+  "description": "ANTLR (ANother Tool for Language Recognition) 4 runtime for PHP",
+  "keywords": [],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Adam Wójs",
+      "email": "adam@wojs.pl"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "php-ds/php-ds": "dev-master",
+    "ext-intl": "*",
+    "ext-mbstring": "*",
+    "ramsey/uuid": "^3.8",
+    "ext-gmp": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ANTLR\\v4\\Runtime\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ANTLR\\v4\\Runtime\\Tests\\": "tests/"
+    }
+  }
+}

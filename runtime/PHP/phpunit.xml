@@ -1,0 +1,15 @@
+<phpunit
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        beStrictAboutTestsThatDoNotTestAnything="false"
+        colors="true"
+>
+    <testsuites>
+        <testsuite name="antlr4-php-runtime">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

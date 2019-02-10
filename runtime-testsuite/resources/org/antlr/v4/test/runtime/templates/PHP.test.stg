@@ -1,0 +1,336 @@
+writeln(s) ::= <<printf("%s\n", (string)(<s>));>>
+write(s) ::= <<printf("%s", (string)(<s>));>>
+writeList(s) ::= <<printf("%s\n", <s; separator=".">);>>
+
+False() ::= "false"
+
+True() ::= "true"
+
+Not(v) ::= "!<v>"
+
+Assert(s) ::= <<assert(<s>);>>
+
+Cast(t,v) ::= "<v>"
+
+Append(a,b) ::= "<a> . <b>"
+
+// TODO: Add to other targets
+AppendList(s) ::= << <s; separator="."> >>
+
+Concat(a,b) ::= "<a><b>"
+
+DeclareLocal(s,v) ::= "\$<s> = <v>;"
+
+AssertIsList(v) ::= "\$__ttt__ = <v>;" // just use static type system
+
+AssignLocal(s,v) ::= "\$<s> = <v>;"
+
+InitIntMember(n,v) ::= <%public \$<n> = <v>;%>
+
+InitBooleanMember(n,v) ::= <%public \$<n> = <v>;%>
+
+CallMethod(o,m) ::= <%<o>-><m>()%>
+
+GetMember(n) ::= <%\$this-><n>%>
+
+SetMember(n,v) ::= <%\$this-><n> = <v>;%>
+
+AddMember(n,v) ::= <%\$this-><n> += <v>;%>
+
+PlusMember(v,n) ::= <%<v> + \$this-><n>%>
+
+MemberEquals(n,v) ::= <%\$this-><n> == <v>%>
+
+ModMemberEquals(n,m,v) ::= <%\$this-><n> % <m> == <v>%>
+
+ModMemberNotEquals(n,m,v) ::= <%\$this-><n> % <m> != <v>%>
+
+DumpDFA() ::= "$this->dumpDFA();"
+
+Pass() ::= ""
+
+StringList() ::= "List\<String>"
+
+BuildParseTrees() ::= "\$this->setBuildParseTree(true);"
+
+BailErrorStrategy() ::= <%\$this->setErrorHandler(new \\ANTLR\\v4\\Runtime\\BailErrorStrategy());%>
+
+ToStringTree(s) ::= <%<s>->toStringTree(\$this)%>
+
+Column() ::= "\$this->getCharPositionInLine()"
+
+Text() ::= "\$this->getText()"
+
+ValEquals(a,b) ::= <%<a>==<b>%>
+
+TextEquals(a) ::= <%\$this->getText() === "<a>"%>
+
+PlusText(a) ::= <%"<a>" . \$this->getText()%>
+
+InputText() ::= "\$this->_input->getText()"
+
+LTEquals(i, v) ::= <%\$this->_input->LT(<i>)->getText() === <v>%>
+
+LANotEquals(i, v) ::= <%\$this->_input->LA(<i>)!=<v>%>
+
+TokenStartColumnEquals(i) ::= <%\$this->_tokenStartCharPositionInLine==<i>%>
+
+ImportListener(X) ::= ""
+
+GetExpectedTokenNames() ::= "\$this->getExpectedTokens()->toStringUsingVocabulary(\$this->getVocabulary())"
+
+RuleInvocationStack() ::= "\$this->getRuleInvocationStack()"
+
+LL_EXACT_AMBIG_DETECTION() ::= <<\$this->_interp->setPredictionMode(\\ANTLR\\v4\\Runtime\\ATN\\PredictionMode::LL_EXACT_AMBIG_DETECTION);>>
+
+ParserToken(parser, token) ::= <%<parser>::<token>%>
+
+Production(p) ::= <%<p>%>
+
+Result(r) ::= <%<r>%>
+
+// TODO: Add to other targets
+AttrRef(x) ::= <%\$<x>%>
+
+ParserPropertyMember() ::= <<
+@members {
+private function Property(): bool {
+  return true;
+}
+}
+>>
+
+ParserPropertyCall(p, call) ::= "<p>-><call>"
+
+PositionAdjustingLexer() ::= <<
+
+public function nextToken(): \ANTLR\v4\Runtime\Token {
+	if (\$this->_interp === null || get_class(\$this->_interp) === 'ANTLR\v4\Runtime\ATN\LexerATNSimulator') {
+		\$this->_interp = \$this->createPositionAdjustingLexerATNSimulator(
+			\$this, \$this->getATN(), \$this->getDecisionToDFA(), new PredictionContextCache()
+		);
+	}
+
+	return parent::nextToken();
+}
+
+public function emit(\ANTLR\v4\Runtime\Token \$token = null): \ANTLR\v4\Runtime\Token {
+	switch (\$this->_type) {
+		case self::TOKENS:
+			\$this->handleAcceptPositionForKeyword("tokens");
+			break;
+		case self::LABEL:
+			\$this->handleAcceptPositionForIdentifier();
+			break;
+		default:
+			break;
+	}
+
+	return parent::emit(\$token);
+}
+
+private function handleAcceptPositionForIdentifier(): bool {
+	\$tokenText = \$this->getText();
+	\$identifierLength = 0;
+	while (\$identifierLength \< mb_strlen(\$tokenText) && \$this->isIdentifierChar(mb_substr(\$tokenText, \$identifierLength, 1))) {
+		\$identifierLength++;
+	}
+
+	if (\$this->getInputStream()->index() > \$this->_tokenStartCharIndex + \$identifierLength) {
+		\$offset = \$identifierLength - 1;
+		\$this->getInterpreter()->resetAcceptPosition(\$this->getInputStream(), \$this->_tokenStartCharIndex + \$offset, \$this->_tokenStartLine, \$this->_tokenStartCharPositionInLine + \$offset);
+		return true;
+	}
+
+	return false;
+}
+
+private function handleAcceptPositionForKeyword(?string \$keyword): bool {
+	if (\$this->getInputStream()->index() > \$this->_tokenStartCharIndex + mb_strlen(\$keyword)) {
+		\$offset = mb_strlen(\$keyword) - 1;
+		\$this->getInterpreter()->resetAcceptPosition(\$this->getInputStream(), \$this->_tokenStartCharIndex + \$offset, \$this->_tokenStartLine, \$this->_tokenStartCharPositionInLine + \$offset);
+		return true;
+	}
+
+	return false;
+}
+
+private function isIdentifierChar(?string \$c): bool {
+	return ctype_alnum(\$c) || \$c === '_';
+}
+
+private function createPositionAdjustingLexerATNSimulator(
+	Lexer \$recog,
+	ATN \$atn,
+	array \$decisionToDFA,
+	PredictionContextCache \$sharedContextCache
+): LexerATNSimulator {
+	return new class (\$recog, \$atn, \$decisionToDFA, \$sharedContextCache) extends LexerATNSimulator {
+		public function resetAcceptPosition(CharStream \$input, int \$index, int \$line, int \$charPositionInLine): void
+		{
+			\$input->seek(\$index);
+			\$this->line = \$line;
+			\$this->charPositionInLine = \$charPositionInLine;
+			\$this->consume(\$input);
+		}
+	};
+}
+>>
+
+BasicListener(X) ::= <<
+@parser::members {
+	public function getLeafListener(): TBaseListener
+	{
+		require_once 'TBaseListener.php';
+
+		return new class extends TBaseListener {
+			public function visitTerminal(TerminalNode \$node): void {
+				printf("%s\n", \$node->getSymbol()->getText());
+			}
+		};
+	}
+}
+>>
+
+WalkListener(s) ::= <<
+\$walker = new \ANTLR\v4\Runtime\Tree\ParseTreeWalker();
+\$walker->walk(\$this->getLeafListener(), <s>);
+>>
+
+TreeNodeWithAltNumField(X) ::= <<
+@parser::header {
+
+if (!class_exists('MyRuleNode')) {
+	class MyRuleNode extends \ANTLR\v4\Runtime\ParserRuleContext
+	{
+		public \$altNum = 0;
+
+		public function getAltNumber(): int
+		{
+			return \$this->altNum;
+		}
+
+		public function setAltNumber(int \$altNum): void
+		{
+			\$this->altNum = \$altNum;
+		}
+	}
+}
+}
+>>
+
+TokenGetterListener(X) ::= <<
+@parser::members {
+	public function getLeafListener(): TBaseListener
+	{
+		require_once 'TBaseListener.php';
+
+		return new class extends TBaseListener
+		{
+			public function exitA(AContext \$ctx): void
+			{
+				if (\$ctx->getChildCount() === 2) {
+					printf("%s %s [%s]\n", \$ctx->INT(0)->getSymbol()->getText(),
+						\$ctx->INT(1)->getSymbol()->getText(), implode(', ', \$ctx->INT()));
+				} else {
+					printf("%s\n", \$ctx->ID()->getSymbol());
+				}
+			}
+		};
+	}
+}
+>>
+
+RuleGetterListener(X) ::= <<
+@parser::members {
+	public function getLeafListener(): TBaseListener
+	{
+		require_once 'TBaseListener.php';
+
+		return new class extends TBaseListener
+		{
+			public function exitA(AContext \$ctx): void
+			{
+				if (\$ctx->getChildCount() === 2) {
+					printf("%s %s %s\n", \$ctx->b(0)->start->getText(),
+						\$ctx->b(1)->start->getText(), \$ctx->b()[0]->start->getText());
+				} else {
+					printf("%s\n", \$ctx->b(0)->start->getText());
+				}
+			}
+		};
+	}
+}
+>>
+
+LRListener(X) ::= <<
+@parser::members {
+	public function getLeafListener(): TBaseListener
+	{
+		require_once 'TBaseListener.php';
+
+		return new class extends TBaseListener
+		{
+			public function exitE(EContext \$ctx): void
+			{
+				if (\$ctx->getChildCount() === 3) {
+					printf("%s %s %s\n", \$ctx->e(0)->start->getText(),
+						\$ctx->e(1)->start->getText(), \$ctx->e()[0]->start->getText());
+				} else {
+					printf("%s\n", \$ctx->INT()->getSymbol()->getText());
+				}
+			}
+		};
+	}
+}
+>>
+
+LRWithLabelsListener(X) ::= <<
+@parser::members {
+	public function getLeafListener(): TBaseListener
+	{
+		require_once 'TBaseListener.php';
+
+		return new class extends TBaseListener
+		{
+			public function exitCall(CallContext \$ctx): void
+			{
+				printf("%s %s\n", \$ctx->e()->start->getText(), \$ctx->eList());
+			}
+
+			public function exitInt(IntContext \$ctx): void
+			{
+				printf("%s\n", \$ctx->INT()->getSymbol()->getText());
+			}
+		};
+	}
+}
+>>
+
+DeclareContextListGettersFunction() ::= <<
+public function foo(): void {
+	\$s = null;
+	\$a = \$s->a();
+	\$b = \$s->b();
+}
+>>
+
+Declare_foo() ::= <<
+	public function foo() : void {printf("foo\n");}
+>>
+
+Invoke_foo() ::= "$this->foo();"
+
+Declare_pred() ::= <<public function pred(bool \$v): bool
+{
+	printf("eval=%s\n", \$v ? "true" : "false");
+	return \$v;
+}
+>>
+
+Invoke_pred(v) ::= <<\$this->pred(<v>)>>
+
+ParserTokenType(t) ::= "Parser::<t>"
+ContextRuleFunction(ctx, rule) ::= "<ctx>-><rule>"
+StringType() ::= "String"
+ContextMember(ctx, subctx, member) ::= "<ctx>-><subctx>-><member>"

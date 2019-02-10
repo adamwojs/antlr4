@@ -96,7 +96,7 @@ public abstract class BaseRuntimeTest {
 	public void setUp() throws Exception {
 		// From http://junit.sourceforge.net/javadoc/org/junit/Assume.html
 		// "The default JUnit runner treats tests with failing assumptions as ignored"
-		assumeFalse(descriptor.ignore(descriptor.getTarget()));
+		assumeFalse(descriptor.ignore( descriptor.getTarget()));
 		delegate.testSetUp();
 	}
 
@@ -105,7 +105,7 @@ public abstract class BaseRuntimeTest {
 		@Override
 		protected void succeeded(Description description) {
 			// remove tmpdir if no error.
-			delegate.eraseTempDir();
+			//delegate.eraseTempDir();
 		}
 	};
 

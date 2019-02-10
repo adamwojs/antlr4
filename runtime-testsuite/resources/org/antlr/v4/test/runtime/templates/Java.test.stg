@@ -14,6 +14,10 @@ Cast(t,v) ::= "((<t>)<v>)"
 
 Append(a,b) ::= "<a> + <b>"
 
+AppendList(s) ::= << <s; separator="+"> >>
+
+CallMethod(o,m) ::= <%<o>.<m>()%>
+
 Concat(a,b) ::= "<a><b>"
 
 DeclareLocal(s,v) ::= "Object <s> = <v>;"
@@ -83,6 +87,8 @@ ParserToken(parser, token) ::= <%<parser>.<token>%>
 Production(p) ::= <%<p>%>
 
 Result(r) ::= <%<r>%>
+
+AttrRef(x) ::= <%<x>%>
 
 ParserPropertyMember() ::= <<
 @members {

@@ -48,7 +48,7 @@ public class ParserErrorsDescriptors {
 	 */
 	public static class ContextListGetters extends BaseParserTestDescriptor {
 		public String input = "abab";
-		public String output = "abab\n";
+		public String output = "abab";
 		public String errors = null;
 		public String startRule = "s";
 		public String grammarName = "T";

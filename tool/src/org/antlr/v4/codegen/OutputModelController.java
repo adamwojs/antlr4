@@ -181,6 +181,9 @@ public class OutputModelController {
 			}
 		}
 
+		parser.structDecls.add(function.ruleCtx);
+		parser.structDecls.addAll(function.altLabelCtxs.values());
+
 		popCurrentRule();
 	}
 

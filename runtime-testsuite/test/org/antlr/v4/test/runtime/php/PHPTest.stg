@@ -1,0 +1,116 @@
+ComposerFile(runtimePath) ::= <<
+{
+  "name": "adamwojs/antlr4-runtime-testcase",
+  "type": "library",
+  "description": "ANTLR (ANother Tool for Language Recognition) 4 PHP runtime test case",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2",
+    "adamwojs/antlr4-runtime": "dev-master"
+  },
+  "autoload": {},
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "<runtimePath>"
+    }
+  ]
+}
+>>
+
+LexerTestFile(lexerName, showDFA) ::= <<
+\<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/<lexerName>.php';
+
+use ANTLR\v4\Runtime\CommonTokenStream;
+use ANTLR\v4\Runtime\StringCharStream;
+use ANTLR\v4\Runtime\MultiByteStringCharStream;
+use ANTLR\v4\Runtime\Token;
+use ANTLR\v4\Runtime\Lexer;
+
+$input = (string)file_get_contents($argv[1]);
+$lexer = new <lexerName>(new MultiByteStringCharStream($input));
+
+$stream = new CommonTokenStream($lexer);
+$stream->fill();
+
+foreach ($stream->getAllTokens() as $token) {
+	echo $token->toString(), PHP_EOL;
+}
+
+<if(showDFA)>
+echo $lexer->getInterpreter()->decisionToDFA[Lexer::DEFAULT_MODE]->toLexerString();
+<endif>
+>>
+
+ParserTestFile(parserName, lexerName, listenerName, visitorName, parserStartRuleName, debug, trace) ::= <<
+\<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/<listenerName>.php';
+require_once __DIR__ . '/<visitorName>.php';
+require_once __DIR__ . '/<lexerName>.php';
+require_once __DIR__ . '/<parserName>.php';
+
+use ANTLR\v4\Runtime\CommonTokenStream;
+use ANTLR\v4\Runtime\MultiByteStringCharStream;
+use ANTLR\v4\Runtime\Tree\ParseTreeWalker;
+use ANTLR\v4\Runtime\Exception\IllegalStateException;
+use ANTLR\v4\Runtime\Tree\ErrorNode;
+use ANTLR\v4\Runtime\Tree\ParseTreeListener;
+use ANTLR\v4\Runtime\Tree\RuleNode;
+use ANTLR\v4\Runtime\Tree\TerminalNode;
+use ANTLR\v4\Runtime\ParserRuleContext;
+use ANTLR\v4\Runtime\DiagnosticErrorListener;
+
+class TreeShapeListener implements ParseTreeListener
+{
+    public function visitTerminal(TerminalNode $node): void
+    {
+    }
+
+    public function visitErrorNode(ErrorNode $node): void
+    {
+    }
+
+    public function enterEveryRule(ParserRuleContext $ctx): void
+    {
+        for ($i = 0; $i \< $ctx->getChildCount(); $i++) {
+            $parent = $ctx->getChild($i)->getParent();
+            if (!($parent instanceof RuleNode) || $parent->getRuleContext() !== $ctx) {
+                throw new IllegalStateException("Invalid parse tree shape detected.");
+            }
+        }
+    }
+
+    public function exitEveryRule(ParserRuleContext $ctx): void
+    {
+    }
+}
+
+$input  = (string)file_get_contents($argv[1]);
+$lexer  = new <lexerName>(new MultiByteStringCharStream($input));
+$stream = new CommonTokenStream($lexer);
+
+$parser = new <parserName>($stream);
+$parser->setBuildParseTree(true);
+<if(debug)>
+$parser->addErrorListener(new DiagnosticErrorListener());
+<endif>
+<if(trace)>
+$parser->setTrace(true);
+<endif>
+
+$tree = $parser-><parserStartRuleName>();
+
+ParseTreeWalker::getDefault()->walk(new TreeShapeListener(), $tree);
+
+>>

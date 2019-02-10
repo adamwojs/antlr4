@@ -287,8 +287,10 @@ public class RuleFunction extends OutputModelObject {
 		}
 		else {
 			if ( needList ) {
-				if(factory.getGenerator().getTarget().supportsOverloadedMethods())
+				if(factory.getGenerator().getTarget().supportsOverloadedMethods()) {
 					decls.add( new ContextTokenListGetterDecl(factory, refLabelName) );
+				}
+
 				decls.add( new ContextTokenListIndexedGetterDecl(factory, refLabelName) );
 			}
 			else {
