@@ -187,7 +187,7 @@ abstract class PredictionContext extends BaseObject
         }
 
         if ($a->returnState === $b->returnState) { // a == b
-            $parent = self::merge($a, $b, $rootIsWildcard, $mergeCache);
+            $parent = self::merge($a->parent, $b->parent, $rootIsWildcard, $mergeCache);
             // if parent is same as existing a or b parent or reduced to a parent, return it
             if ($parent === $a->parent) {
                 // ax + bx = ax, if a=b
