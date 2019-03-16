@@ -9,6 +9,7 @@ namespace ANTLR\v4\Runtime;
  * recognizer.
  *
  * @see Recognizer#getVocabulary()
+ *
  * @author Sam Harwell
  */
 interface VocabularyInterface
@@ -52,10 +53,10 @@ interface VocabularyInterface
      *  </tr>
      * </table>
      *
-     * @param int $tokenType The token type.
+     * @param int $tokenType the token type
      *
-     * @return string|null The string literal associated with the specified token type, or
-     * {@code null} if no string literal is associated with the type.
+     * @return string|null the string literal associated with the specified token type, or
+     * {@code null} if no string literal is associated with the type
      */
     public function getLiteralName(int $tokenType): ?string;
 
@@ -97,10 +98,10 @@ interface VocabularyInterface
      *  </tr>
      * </table>
      *
-     * @param int $tokenType The token type.
+     * @param int $tokenType the token type
      *
-     * @return string|null The symbolic name associated with the specified token type, or
-     * {@code null} if no symbolic name is associated with the type.
+     * @return string|null the symbolic name associated with the specified token type, or
+     * {@code null} if no symbolic name is associated with the type
      */
     public function getSymbolicName(int $tokenType): ?string;
 
@@ -119,10 +120,10 @@ interface VocabularyInterface
      *  <li>The result of {@link Integer#toString}</li>
      * </ol>
      *
-     * @param int $tokenType The token type.
+     * @param int $tokenType the token type
      *
-     * @return string The display name of the token type, for use in error reporting or
-     * other user-visible messages which reference specific token types.
+     * @return string the display name of the token type, for use in error reporting or
+     * other user-visible messages which reference specific token types
      */
     public function getDisplayName(int $tokenType): string;
 }

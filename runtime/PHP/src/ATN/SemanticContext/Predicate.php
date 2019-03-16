@@ -63,7 +63,7 @@ class Predicate extends SemanticContext
             return true;
         }
 
-        if ($o instanceof Predicate) {
+        if ($o instanceof self) {
             return $this->ruleIndex === $o->ruleIndex
                 && $this->prefIndex === $o->prefIndex
                 && $this->isCtxDependent === $o->isCtxDependent;

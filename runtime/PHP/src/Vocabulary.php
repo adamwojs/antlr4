@@ -28,14 +28,14 @@ class Vocabulary extends BaseObject implements VocabularyInterface
      * Constructs a new instance of {@link VocabularyImpl} from the specified
      * literal, symbolic, and display token names.
      *
-     * @param string[] $literalNames The literal names assigned to tokens, or {@code null}
-     * if no literal names are assigned.
-     * @param string[] $symbolicNames The symbolic names assigned to tokens, or
-     * {@code null} if no symbolic names are assigned.
-     * @param string[] $displayNames The display names assigned to tokens, or {@code null}
+     * @param string[] $literalNames the literal names assigned to tokens, or {@code null}
+     * if no literal names are assigned
+     * @param string[] $symbolicNames the symbolic names assigned to tokens, or
+     * {@code null} if no symbolic names are assigned
+     * @param string[] $displayNames the display names assigned to tokens, or {@code null}
      * to use the values in {@code literalNames} and {@code symbolicNames} as
      * the source of display names, as described in
-     * {@link #getDisplayName(int)}.
+     * {@link #getDisplayName(int)}
      *
      * @see #getLiteralName(int)
      * @see #getSymbolicName(int)
@@ -81,7 +81,7 @@ class Vocabulary extends BaseObject implements VocabularyInterface
         }
 
         if ($tokenType === Token::EOF) {
-            return "EOF";
+            return 'EOF';
         }
 
         return null;
@@ -123,7 +123,7 @@ class Vocabulary extends BaseObject implements VocabularyInterface
     {
         static $instance = null;
         if ($instance === null) {
-            $instance = new Vocabulary();
+            $instance = new self();
         }
 
         return $instance;
@@ -138,11 +138,11 @@ class Vocabulary extends BaseObject implements VocabularyInterface
      * {@link #getLiteralName(int)} and {@link #getSymbolicName(int)}, and the
      * value from {@code tokenNames} for the display names.</p>
      *
-     * @param string[] $tokenNames The token names, or {@code null} if no token names are
-     * available.
+     * @param string[] $tokenNames the token names, or {@code null} if no token names are
+     * available
      *
-     * @return \ANTLR\v4\Runtime\VocabularyInterface A {@link Vocabulary} instance which uses {@code tokenNames} for
-     * the display names of tokens.
+     * @return \ANTLR\v4\Runtime\VocabularyInterface a {@link Vocabulary} instance which uses {@code tokenNames} for
+     * the display names of tokens
      */
     public static function fromTokenNames(?array $tokenNames): VocabularyInterface
     {
@@ -162,8 +162,7 @@ class Vocabulary extends BaseObject implements VocabularyInterface
                 if ($firstChar === '\'') {
                     $symbolicNames[$i] = null;
                     continue;
-                }
-                else if (self::isUpperCase($firstChar)) {
+                } elseif (self::isUpperCase($firstChar)) {
                     $literalNames[$i] = null;
                     continue;
                 }
@@ -173,11 +172,11 @@ class Vocabulary extends BaseObject implements VocabularyInterface
             $literalNames[$i] = $symbolicNames[$i] = null;
         }
 
-        return new Vocabulary($literalNames, $symbolicNames, $tokenNames);
+        return new self($literalNames, $symbolicNames, $tokenNames);
     }
 
     private static function isUpperCase(string $str): bool
     {
-        return mb_convert_case($str, MB_CASE_UPPER, "UTF-8") === $str;
+        return mb_convert_case($str, MB_CASE_UPPER, 'UTF-8') === $str;
     }
 }

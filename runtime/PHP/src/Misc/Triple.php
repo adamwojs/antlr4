@@ -38,7 +38,7 @@ class Triple extends BaseObject
             return true;
         }
 
-        if ($o instanceof Triple) {
+        if ($o instanceof self) {
             return ObjectEqualityComparator::getInstance()->equalsTo($this->a, $o->a)
                 && ObjectEqualityComparator::getInstance()->equalsTo($this->b, $o->b)
                 && ObjectEqualityComparator::getInstance()->equalsTo($this->c, $o->c);

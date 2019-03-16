@@ -53,6 +53,7 @@ class SingletonPredictionContext extends PredictionContext
     public function getParent(int $index): ?PredictionContext
     {
         assert($index === 0);
+
         return $this->parent;
     }
 
@@ -62,9 +63,10 @@ class SingletonPredictionContext extends PredictionContext
     public function getReturnState(int $index): int
     {
         assert($index === 0);
+
         return $this->returnState;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -74,7 +76,7 @@ class SingletonPredictionContext extends PredictionContext
             return true;
         }
 
-        if ($o instanceof SingletonPredictionContext) {
+        if ($o instanceof self) {
             if ($this->hash() !== $o->hash()) {
                 // can't be same if hash is different
                 return false;
@@ -91,12 +93,12 @@ class SingletonPredictionContext extends PredictionContext
     {
         return new ArrayPredictionContext([$this->parent], [$this->returnState]);
     }
-    
+
     public function __toString(): string
     {
         if ($this->parent === null) {
             if ($this->returnState === self::EMPTY_RETURN_STATE) {
-                return "$";
+                return '$';
             }
 
             return (string)$this->returnState;

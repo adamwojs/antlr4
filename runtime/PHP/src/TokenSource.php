@@ -35,8 +35,8 @@ interface TokenSource
      * Get the line number for the current position in the input stream. The
      * first line in the input is line 1.
      *
-     * @return int The line number for the current position in the input stream, or
-     * 0 if the current token source does not track line numbers.
+     * @return int the line number for the current position in the input stream, or
+     * 0 if the current token source does not track line numbers
      */
     public function getLine(): int;
 
@@ -44,8 +44,8 @@ interface TokenSource
      * Get the index into the current line for the current position in the input
      * stream. The first character on a line has position 0.
      *
-     * @return int The line number for the current position in the input stream, or
-     * -1 if the current token source does not track character positions.
+     * @return int the line number for the current position in the input stream, or
+     * -1 if the current token source does not track character positions
      */
     public function getCharPositionInLine(): int;
 
@@ -53,9 +53,9 @@ interface TokenSource
      * Get the {@link CharStream} from which this token source is currently
      * providing tokens.
      *
-     * @return \ANTLR\v4\Runtime\CharStream The {@link CharStream} associated with the current position in
+     * @return \ANTLR\v4\Runtime\CharStream the {@link CharStream} associated with the current position in
      * the input, or {@code null} if no input stream is available for the token
-     * source.
+     * source
      */
     public function getInputStream(): IntStream;
 
@@ -72,7 +72,7 @@ interface TokenSource
      * Set the {@link TokenFactory} this token source should use for creating
      * {@link Token} objects from the input.
      *
-     * @param \ANTLR\v4\Runtime\TokenFactory factory The {@link TokenFactory} to use for creating tokens.
+     * @param \ANTLR\v4\Runtime\TokenFactory factory The {@link TokenFactory} to use for creating tokens
      */
     public function setTokenFactory(TokenFactory $factory): void;
 
@@ -80,7 +80,7 @@ interface TokenSource
      * Gets the {@link TokenFactory} this token source is currently using for
      * creating {@link Token} objects from the input.
      *
-     * @return \ANTLR\v4\Runtime\TokenFactory The {@link TokenFactory} currently used by this token source.
+     * @return \ANTLR\v4\Runtime\TokenFactory the {@link TokenFactory} currently used by this token source
      */
     public function getTokenFactory(): TokenFactory;
 }

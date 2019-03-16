@@ -16,6 +16,7 @@ final class MurmurHash
      * Initialize the hash using the specified {@code seed}.
      *
      * @param int|null $seed the seed
+     *
      * @return int the intermediate hash value
      */
     public static function initialize(?int $seed = null): int
@@ -39,7 +40,7 @@ final class MurmurHash
     {
         $r1 = 15;
         $r2 = 13;
-        $m  = 5;
+        $m = 5;
 
         $k = gmp_mul($value, 0xCC9E2D51);
         $k = gmp_and($k, 0xFFFFFFFF);

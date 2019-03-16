@@ -80,7 +80,7 @@ class LexerATNConfig extends ATNConfig
             return true;
         }
 
-        if(!($o instanceof LexerATNConfig)) {
+        if (!($o instanceof self)) {
             return false;
         }
 
@@ -108,8 +108,8 @@ class LexerATNConfig extends ATNConfig
         int $alt,
         PredictionContext $context,
         LexerActionExecutor $lexerActionExecutor = null
-    ): LexerATNConfig {
-        return new LexerATNConfig($state, $alt, $context, 0, SemanticContext::NONE(), $lexerActionExecutor, false);
+    ): self {
+        return new self($state, $alt, $context, 0, SemanticContext::NONE(), $lexerActionExecutor, false);
     }
 
     /**
@@ -121,11 +121,11 @@ class LexerATNConfig extends ATNConfig
      * @return \ANTLR\v4\Runtime\ATN\LexerATNConfig
      */
     public static function createFromLexerATNConfigAndATNState(
-        LexerATNConfig $c,
+        self $c,
         ATNState $state,
         PredictionContext $context = null,
         LexerActionExecutor $lexerActionExecutor = null
-    ): LexerATNConfig {
+    ): self {
         $passedThroughNonGreedyDecision = $c->passedThroughNonGreedyDecision ||
             ($state instanceof DecisionState && $state->nonGreedy);
 
@@ -137,6 +137,6 @@ class LexerATNConfig extends ATNConfig
             $lexerActionExecutor = $c->lexerActionExecutor;
         }
 
-        return new LexerATNConfig($state, $c->alt, $context, $c->reachesIntoOuterContext, $c->semanticContext, $lexerActionExecutor, $passedThroughNonGreedyDecision);
+        return new self($state, $c->alt, $context, $c->reachesIntoOuterContext, $c->semanticContext, $lexerActionExecutor, $passedThroughNonGreedyDecision);
     }
 }

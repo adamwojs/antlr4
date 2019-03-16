@@ -12,7 +12,6 @@ final class CharStreams
 
     public static function fromString(string $s): CharStream
     {
-
         // TODO: Missing \ANTLR\v4\Runtime\CharStreams::fromString implementation
         return null;
     }

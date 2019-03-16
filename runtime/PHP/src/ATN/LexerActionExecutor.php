@@ -68,13 +68,13 @@ class LexerActionExecutor extends BaseObject
      * <p>If the current executor already has offsets assigned to all
      * position-dependent lexer actions, the method returns {@code this}.</p>
      *
-     * @param int $offset The current offset to assign to all position-dependent
-     * lexer actions which do not already have offsets assigned.
+     * @param int $offset the current offset to assign to all position-dependent
+     * lexer actions which do not already have offsets assigned
      *
-     * @return \ANTLR\v4\Runtime\ATN\LexerActionExecutor A {@link LexerActionExecutor} which stores input stream offsets
-     * for all position-dependent lexer actions.
+     * @return \ANTLR\v4\Runtime\ATN\LexerActionExecutor a {@link LexerActionExecutor} which stores input stream offsets
+     * for all position-dependent lexer actions
      */
-    public function fixOffsetBeforeMatch(int $offset): LexerActionExecutor
+    public function fixOffsetBeforeMatch(int $offset): self
     {
         $updatedLexerActions = null;
         foreach ($this->lexerActions as $i => $lexerAction) {
@@ -91,13 +91,13 @@ class LexerActionExecutor extends BaseObject
             return $this;
         }
 
-        return new LexerActionExecutor($updatedLexerActions);
+        return new self($updatedLexerActions);
     }
 
     /**
      * Gets the lexer actions to be executed by this executor.
      *
-     * @return \ANTLR\v4\Runtime\ATN\LexerAction[] The lexer actions to be executed by this executor.
+     * @return \ANTLR\v4\Runtime\ATN\LexerAction[] the lexer actions to be executed by this executor
      */
     public function getLexerActions(): array
     {
@@ -114,7 +114,7 @@ class LexerActionExecutor extends BaseObject
      * method returns, the input position will be restored to the same position
      * it was in when the method was invoked.</p>
      *
-     * @param \ANTLR\v4\Runtime\Lexer $lexer The lexer instance.
+     * @param \ANTLR\v4\Runtime\Lexer $lexer the lexer instance
      * @param \ANTLR\v4\Runtime\CharStream $input The input stream which is the source for the current token.
      * When this method is called, the current {@link IntStream#index} for
      * {@code input} should be the start of the following token, i.e. 1
@@ -135,8 +135,7 @@ class LexerActionExecutor extends BaseObject
                     $input->seek($startIndex + $offset);
                     $lexerAction = $lexerAction->getAction();
                     $requireSeek = ($startIndex + $offset) !== $stopIndex;
-                }
-                else if ($lexerAction->isPositionDependent()) {
+                } elseif ($lexerAction->isPositionDependent()) {
                     $input->seek($stopIndex);
                     $requireSeek = false;
                 }
@@ -167,7 +166,7 @@ class LexerActionExecutor extends BaseObject
             return true;
         }
 
-        if ($o instanceof LexerActionExecutor) {
+        if ($o instanceof self) {
             if ($o->hashCode !== $this->hashCode) {
                 return false;
             }
@@ -197,18 +196,18 @@ class LexerActionExecutor extends BaseObject
      * the lexer while matching a token within a particular
      * {@link LexerATNConfig}. If this is {@code null}, the method behaves as
      * though it were an empty executor.
-     * @param \ANTLR\v4\Runtime\ATN\LexerAction $action The lexer action to execute after the actions
-     * specified in {@code lexerActionExecutor}.
+     * @param \ANTLR\v4\Runtime\ATN\LexerAction $action the lexer action to execute after the actions
+     * specified in {@code lexerActionExecutor}
      *
-     * @return \ANTLR\v4\Runtime\ATN\LexerActionExecutor A {@link LexerActionExecutor} for executing the combine actions
-     * of {@code lexerActionExecutor} and {@code lexerAction}.
+     * @return \ANTLR\v4\Runtime\ATN\LexerActionExecutor a {@link LexerActionExecutor} for executing the combine actions
+     * of {@code lexerActionExecutor} and {@code lexerAction}
      */
-    public static function append(?LexerActionExecutor $executor, LexerAction $action): LexerActionExecutor
+    public static function append(?self $executor, LexerAction $action): self
     {
         if ($executor === null) {
-            return new LexerActionExecutor([$action]);
+            return new self([$action]);
         }
 
-        return new LexerActionExecutor(array_merge($executor->lexerActions, [$action]));
+        return new self(array_merge($executor->lexerActions, [$action]));
     }
 }

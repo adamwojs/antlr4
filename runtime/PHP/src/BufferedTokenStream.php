@@ -56,7 +56,7 @@ class BufferedTokenStream implements TokenStream
     /**
      * Indicates whether the {@link Token#EOF} token has been fetched from
      * {@link #tokenSource} and added to {@link #tokens}. This field improves
-     * performance for the following cases:
+     * performance for the following cases:.
      *
      * <ul>
      * <li>{@link #consume}: The lookahead check in {@link #consume} to prevent
@@ -94,7 +94,7 @@ class BufferedTokenStream implements TokenStream
         }
 
         if (!$skipEOFCheck && $this->LA(1) === self::EOF) {
-            throw new IllegalStateException("Cannot consume EOF");
+            throw new IllegalStateException('Cannot consume EOF');
         }
 
         if ($this->sync($this->p + 1)) {
@@ -129,7 +129,7 @@ class BufferedTokenStream implements TokenStream
      *
      * @param int $n
      *
-     * @return int The actual number of elements added to the buffer.
+     * @return int the actual number of elements added to the buffer
      */
     protected function fetch(int $n): int
     {
@@ -147,6 +147,7 @@ class BufferedTokenStream implements TokenStream
 
             if ($token->getType() === Token::EOF) {
                 $this->fetchedEOF = true;
+
                 return $i + 1;
             }
         }
@@ -168,7 +169,7 @@ class BufferedTokenStream implements TokenStream
             return null;
         }
 
-        return $this->tokens[$this->p  - $k];
+        return $this->tokens[$this->p - $k];
     }
 
     /**
@@ -208,16 +209,16 @@ class BufferedTokenStream implements TokenStream
      * <p>For example, {@link CommonTokenStream} overrides this method to ensure that
      * the seek target is always an on-channel token.</p>
      *
-     * @param int $i The target token index.
+     * @param int $i the target token index
      *
-     * @return int The adjusted target token index.
+     * @return int the adjusted target token index
      */
     protected function adjustSeekIndex(int $i): int
     {
         return $i;
     }
 
-    protected final function lazyInit(): void
+    final protected function lazyInit(): void
     {
         if ($this->p === -1) {
             $this->setup();
@@ -298,14 +299,14 @@ class BufferedTokenStream implements TokenStream
     public function get(int $i): Token
     {
         if ($i < 0 || $i >= count($this->tokens)) {
-            throw new IndexOutOfBoundsException("Token index $i out of range 0.." . count($this->tokens) -1);
+            throw new IndexOutOfBoundsException("Token index $i out of range 0.." . count($this->tokens) - 1);
         }
 
-        returN $this->tokens[$i];
+        return $this->tokens[$i];
     }
 
     /**
-     * Get all tokens from start..stop inclusively
+     * Get all tokens from start..stop inclusively.
      *
      * @param int $start
      * @param int $stop
@@ -340,7 +341,7 @@ class BufferedTokenStream implements TokenStream
     }
 
     /**
-     * Returns all tokens
+     * Returns all tokens.
      *
      * @return \ANTLR\v4\Runtime\Token[]
      */
@@ -367,11 +368,11 @@ class BufferedTokenStream implements TokenStream
         $this->lazyInit();
 
         if ($start < 0 || $start >= count($this->tokens)) {
-            throw new IndexOutOfBoundsException("start $start not in 0.." . count($this->tokens) -1);
+            throw new IndexOutOfBoundsException("start $start not in 0.." . count($this->tokens) - 1);
         }
 
         if ($stop < 0 || $stop >= count($this->tokens)) {
-            throw new IndexOutOfBoundsException("stop $stop not in 0.." . count($this->tokens) -1);
+            throw new IndexOutOfBoundsException("stop $stop not in 0.." . count($this->tokens) - 1);
         }
 
         if ($start > $stop) {
@@ -525,8 +526,7 @@ class BufferedTokenStream implements TokenStream
                 if ($token->getChannel() !== Lexer::DEFAULT_TOKEN_CHANNEL) {
                     $result[] = $token;
                 }
-            }
-            else {
+            } else {
                 if ($token->getChannel() === $channel) {
                     $result[] = $token;
                 }
@@ -562,10 +562,10 @@ class BufferedTokenStream implements TokenStream
     public function getTextForInterval(Interval $interval): string
     {
         $start = $interval->a;
-        $stop  = $interval->b;
+        $stop = $interval->b;
 
         if ($start < 0 || $stop < 0) {
-            return "";
+            return '';
         }
 
         $this->fill();
@@ -574,7 +574,7 @@ class BufferedTokenStream implements TokenStream
             $stop = count($this->tokens) - 1;
         }
 
-        $str = "";
+        $str = '';
         for ($i = $start; $i <= $stop; $i++) {
             $token = $this->tokens[$i];
             if ($token->getType() === self::EOF) {
@@ -604,11 +604,11 @@ class BufferedTokenStream implements TokenStream
             return $this->getTextForInterval(Interval::of($start->getTokenIndex(), $end->getTokenIndex()));
         }
 
-        return "";
+        return '';
     }
 
     /**
-     * Get all tokens from lexer until EOF
+     * Get all tokens from lexer until EOF.
      */
     public function fill(): void
     {
@@ -618,7 +618,7 @@ class BufferedTokenStream implements TokenStream
         while (true) {
             $fetched = $this->fetch($blockSize);
             if ($fetched < $blockSize) {
-                return ;
+                return;
             }
         }
     }

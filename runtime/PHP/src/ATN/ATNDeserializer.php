@@ -27,27 +27,27 @@ class ATNDeserializer
     /**
      * This is the earliest supported serialized UUID.
      */
-    private const BASE_SERIALIZED_UUID = "33761b2d-78bb-4a43-8b0b-4f5bee8aacf3";
+    private const BASE_SERIALIZED_UUID = '33761b2d-78bb-4a43-8b0b-4f5bee8aacf3';
 
     /**
      * This UUID indicates an extension of {@link BASE_SERIALIZED_UUID} for the
      * addition of precedence predicates.
      */
-    private const ADDED_PRECEDENCE_TRANSITIONS = "1da0c57d-6c06-438a-9b27-10bcb3ce0f61";
+    private const ADDED_PRECEDENCE_TRANSITIONS = '1da0c57d-6c06-438a-9b27-10bcb3ce0f61';
 
     /**
      * This UUID indicates an extension of {@link #ADDED_PRECEDENCE_TRANSITIONS}
      * for the addition of lexer actions encoded as a sequence of
      * {@link LexerAction} instances.
      */
-    private const ADDED_LEXER_ACTIONS = "aadb8d7e-aeef-4415-ad2b-8204d6cf042e";
+    private const ADDED_LEXER_ACTIONS = 'aadb8d7e-aeef-4415-ad2b-8204d6cf042e';
 
     /**
      * This UUID indicates the serialized ATN contains two sets of
      * IntervalSets, where the second set's values are encoded as
      * 32-bit integers to support the full Unicode SMP range up to U+10FFFF.
      */
-    private const ADDED_UNICODE_SMP = "59627784-3be5-417a-b9eb-8131a7286089";
+    private const ADDED_UNICODE_SMP = '59627784-3be5-417a-b9eb-8131a7286089';
 
     /**
      * This is the current serialized UUID.
@@ -62,7 +62,7 @@ class ATNDeserializer
         self::BASE_SERIALIZED_UUID,
         self::ADDED_PRECEDENCE_TRANSITIONS,
         self::ADDED_LEXER_ACTIONS,
-        self::ADDED_UNICODE_SMP
+        self::ADDED_UNICODE_SMP,
     ];
 
     /** @var \ANTLR\v4\Runtime\ATN\ATNDeserializationOptions */
@@ -151,8 +151,8 @@ class ATNDeserializer
             $state = $this->stateFactory($stype, $ruleIndex);
             if ($stype === ATNState::LOOP_END) {
                 $loopBackStateNumbers[] = [$state, $data[$p++]];
-            } else if ($state instanceof BlockStartState) {
-                $endStateNumbers[] = [$state, $data[$p++]];;
+            } elseif ($state instanceof BlockStartState) {
+                $endStateNumbers[] = [$state, $data[$p++]];
             }
 
             $atn->addState($state);
@@ -251,12 +251,12 @@ class ATNDeserializer
         //
         $nedges = $data[$p++];
         for ($i = 0; $i < $nedges; $i++) {
-            $src   = $data[$p++];
-            $trg   = $data[$p++];
+            $src = $data[$p++];
+            $trg = $data[$p++];
             $ttype = $data[$p++];
-            $arg1  = $data[$p++];
-            $arg2  = $data[$p++];
-            $arg3  = $data[$p++];
+            $arg1 = $data[$p++];
+            $arg2 = $data[$p++];
+            $arg3 = $data[$p++];
 
             $atn->states[$src]->addTransition(
                 $this->edgeFactory($atn, $ttype, $src, $trg, $arg1, $arg2, $arg3, $sets)
@@ -338,7 +338,7 @@ class ATNDeserializer
 
                 $atn->lexerActions = [];
                 for ($i = 0; $i < $nLexerActions; $i++) {
-                    $type  = $data[$p++];
+                    $type = $data[$p++];
                     $data1 = $data[$p++];
                     $data2 = $data[$p++];
 
@@ -352,8 +352,7 @@ class ATNDeserializer
 
                     $atn->lexerActions[$i] = $this->lexerActionFactory($type, $data1, $data2);
                 }
-            }
-            else {
+            } else {
                 // for compatibility with older serialized ATNs, convert the old
                 // serialized action index for action transitions to the new
                 // form, which is the index of a LexerCustomAction
@@ -383,8 +382,7 @@ class ATNDeserializer
     public function getUnicodeDeserializer(int $mode): UnicodeDeserializer
     {
         if ($mode === UnicodeDeserializingMode::UNICODE_BMP) {
-            return new class implements UnicodeDeserializer
-            {
+            return new class() implements UnicodeDeserializer {
                 public function readUnicode(array &$data, int $p): int
                 {
                     return $data[$p];
@@ -398,8 +396,7 @@ class ATNDeserializer
         }
 
         if ($mode === UnicodeDeserializingMode::UNICODE_SMP) {
-            return new class implements UnicodeDeserializer
-            {
+            return new class() implements UnicodeDeserializer {
                 public function readUnicode(array &$data, int $p): int
                 {
                     return $data[$p] | ($data[$p + 1] << 16);
@@ -441,9 +438,9 @@ class ATNDeserializer
             }
 
             for ($j = 0; $j < $nintervals; $j++) {
-                $a  = $unicodeDeserializer->readUnicode($data, $p);
+                $a = $unicodeDeserializer->readUnicode($data, $p);
                 $p += $unicodeDeserializer->size();
-                $b  = $unicodeDeserializer->readUnicode($data, $p);
+                $b = $unicodeDeserializer->readUnicode($data, $p);
                 $p += $unicodeDeserializer->size();
 
                 $set->add($a, $b);
@@ -460,7 +457,7 @@ class ATNDeserializer
      * the {@link StarLoopEntryState#isPrecedenceDecision} field to the
      * correct value.
      *
-     * @param \ANTLR\v4\Runtime\ATN\ATN $atn The ATN.
+     * @param \ANTLR\v4\Runtime\ATN\ATN $atn the ATN
      */
     private function markPrecedenceDecisions(ATN $atn): void
     {
@@ -507,12 +504,10 @@ class ATNDeserializer
                 if ($state->transition(0)->target instanceof StarBlockStartState) {
                     $this->assert($state->transition(1)->target instanceof LoopEndState);
                     $this->assert(!$state->nonGreedy);
-                }
-                else if ($state->transition(0)->target instanceof LoopEndState) {
+                } elseif ($state->transition(0)->target instanceof LoopEndState) {
                     $this->assert($state->transition(1)->target instanceof StarBlockStartState);
                     $this->assert($state->nonGreedy);
-                }
-                else {
+                } else {
                     throw new IllegalStateException();
                 }
             }
@@ -645,7 +640,7 @@ class ATNDeserializer
                 return new WildcardTransition($target);
         }
 
-        throw new IllegalArgumentException("The specified transition type is not valid.");
+        throw new IllegalArgumentException('The specified transition type is not valid.');
     }
 
     private function lexerActionFactory(int $type, int $data1, int $data2): LexerAction
@@ -675,7 +670,7 @@ class ATNDeserializer
     private function throwUnsupportedUUIDException(UuidInterface $uuid): void
     {
         $message = sprintf(
-            "Could not deserialize ATN with UUID %s (expected %s or a legacy UUID).",
+            'Could not deserialize ATN with UUID %s (expected %s or a legacy UUID).',
             $uuid->toString(),
             implode(', ', self::SUPPORTED_UUIDS)
         );
@@ -686,7 +681,7 @@ class ATNDeserializer
     private function throwUnsupportedSerializedVersionException(int $version): void
     {
         throw new UnsupportedOperationException(sprintf(
-            "Could not deserialize ATN with version %d (expected %d).", $version, self::SERIALIZED_VERSION
+            'Could not deserialize ATN with version %d (expected %d).', $version, self::SERIALIZED_VERSION
         ));
     }
 }

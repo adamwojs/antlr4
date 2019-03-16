@@ -15,7 +15,7 @@ final class PredicateTransition extends AbstractPredicateTransition
     public $predIndex;
 
     /**
-     * e.g., $i ref in pred
+     * e.g., $i ref in pred.
      *
      * @var bool
      */

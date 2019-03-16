@@ -45,7 +45,7 @@ abstract class ATNSimulator extends BaseObject
         $this->sharedContextCache = $sharedContextCache;
     }
 
-    public abstract function reset(): void;
+    abstract public function reset(): void;
 
     /**
      * Clear the DFA cache used by the current instance. Since the DFA cache may
@@ -54,11 +54,11 @@ abstract class ATNSimulator extends BaseObject
      * concurrently.
      *
      * @throws \ANTLR\v4\Runtime\Exception\UnsupportedOperationException if the current instance does not
-     * support clearing the DFA.
+     * support clearing the DFA
      */
     public function clearDFA(): void
     {
-        throw new UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
+        throw new UnsupportedOperationException('This ATN simulator does not support clearing the DFA.');
     }
 
     public function getSharedContextCache(): PredictionContextCache

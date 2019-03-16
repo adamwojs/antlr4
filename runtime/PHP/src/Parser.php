@@ -41,7 +41,7 @@ abstract class Parser extends Recognizer
     protected $_input;
 
     /** @var int[] */
-    protected $_precedenceStack = [ 0 ];
+    protected $_precedenceStack = [0];
 
     /**
      * The {@link ParserRuleContext} object for the currently executing rule.
@@ -109,7 +109,7 @@ abstract class Parser extends Recognizer
     // ...
 
     /**
-     * Reset the parser's state
+     * Reset the parser's state.
      */
     public function reset(): void
     {
@@ -161,8 +161,7 @@ abstract class Parser extends Recognizer
 
             $this->_errHandler->reportMatch($this);
             $this->consume();
-        }
-        else {
+        } else {
             $t = $this->_errHandler->recoverInline($this);
             if ($this->_buildParseTrees && $t->getTokenIndex() === -1) {
                 // we must have conjured up a new token during single token insertion
@@ -199,8 +198,7 @@ abstract class Parser extends Recognizer
         if ($t->getType() > 0) {
             $this->_errHandler->reportMatch($this);
             $this->consume();
-        }
-        else {
+        } else {
             $t = $this->_errHandler->recoverInline($this);
             if ($this->_buildParseTrees && $t->getTokenIndex() === -1) {
                 // we must have conjured up a new token during single token insertion
@@ -260,11 +258,11 @@ abstract class Parser extends Recognizer
      * This property is set to {@code false} by default for a newly constructed parser.
      *
      * @param bool $trimParseTrees {@code true} to trim the capacity of the {@link ParserRuleContext#children}
-     * list to its size after a rule is parsed.
+     * list to its size after a rule is parsed
      */
     public function setTrimParseTree(bool $trimParseTrees): void
     {
-        return ;
+        return;
     }
 
     public function getParseListeners(): array
@@ -460,7 +458,7 @@ abstract class Parser extends Recognizer
     }
 
     /**
-     * Consume and return the {@linkplain #getCurrentToken current symbol}.
+     * Consume and return the {@link plain #getCurrentToken current symbol}.
      *
      * <p>E.g., given the following input with {@code A} being the current
      * lookahead symbol, this function moves the cursor to {@code B} and returns
@@ -495,8 +493,7 @@ abstract class Parser extends Recognizer
                 foreach ($this->_parseListeners as $listener) {
                     $listener->visitErrorNode($node);
                 }
-            }
-            else {
+            } else {
                 $node = $this->_ctx->addTerminalNodeChild($this->createTerminalNode($this->_ctx, $t));
                 foreach ($this->_parseListeners as $listener) {
                     $listener->visitTerminal($node);
@@ -600,10 +597,10 @@ abstract class Parser extends Recognizer
     /**
      * Get the precedence level for the top-most precedence rule.
      *
-     * @return int The precedence level for the top-most precedence rule, or -1 if
-     * the parser context is not nested within a precedence rule.
+     * @return int the precedence level for the top-most precedence rule, or -1 if
+     * the parser context is not nested within a precedence rule
      */
-    public final function getPrecedence(): int
+    final public function getPrecedence(): int
     {
         if (empty($this->_precedenceStack)) {
             return -1;
@@ -724,7 +721,7 @@ abstract class Parser extends Recognizer
      * @param int $symbol the symbol type to check
      *
      * @return bool {@code true} if {@code symbol} can follow the current state in
-     * the ATN, otherwise {@code false}.
+     * the ATN, otherwise {@code false}
      */
     public function isExpectedToken(int $symbol): bool
     {
@@ -808,7 +805,7 @@ abstract class Parser extends Recognizer
             $idx = $p->getRuleIndex();
 
             if ($idx < 0) {
-                $stack[] = "n/a";
+                $stack[] = 'n/a';
             } else {
                 $stack[] = $ruleNames[$idx];
             }

@@ -27,13 +27,13 @@ class OrOperator extends Operator
     {
         $operands = new Set();
 
-        if ($a instanceof OrOperator) {
+        if ($a instanceof self) {
             $operands->add(...$a->opnds);
         } else {
             $operands->add($a);
         }
 
-        if ($b instanceof OrOperator) {
+        if ($b instanceof self) {
             $operands->add(...$b->opnds);
         } else {
             $operands->add($b);
@@ -85,7 +85,7 @@ class OrOperator extends Operator
             if ($evaluated === null) {
                 // The AND context is false if any element is false
                 return null;
-            } else if ($evaluated !== SemanticContext::NONE()) {
+            } elseif ($evaluated !== SemanticContext::NONE()) {
                 // Reduce the result by skipping true elements
                 $operands[] = $evaluated;
             }
@@ -117,7 +117,7 @@ class OrOperator extends Operator
             return true;
         }
 
-        if ($o instanceof OrOperator) {
+        if ($o instanceof self) {
             return $this->opnds === $o->opnds;
         }
 

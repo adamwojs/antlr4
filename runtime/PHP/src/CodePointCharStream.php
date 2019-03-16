@@ -39,7 +39,7 @@ abstract class CodePointCharStream extends BaseObject implements CharStream
     public function consume(): void
     {
         if ($this->size - $this->position === 0) {
-            throw new IllegalStateException("Cannot consume EOF");
+            throw new IllegalStateException('Cannot consume EOF');
         }
 
         $this->position = $this->position + 1;
@@ -76,7 +76,7 @@ abstract class CodePointCharStream extends BaseObject implements CharStream
     public function release(int $marker): void
     {
         // release do nothing; we have entire buffer
-        return ;
+        return;
     }
 
     /**

@@ -83,10 +83,10 @@ class MultiByteStringCharStream implements CharStream
     {
         if ($this->size - $this->pos === 0) {
             assert($this->LA(1) === IntStream::EOF);
-            throw new IllegalStateException("cannot consume EOF");
+            throw new IllegalStateException('cannot consume EOF');
         }
 
-        $this->pos += 1;
+        $this->pos++;
     }
 
     /**

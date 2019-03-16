@@ -35,17 +35,17 @@ abstract class Transition extends BaseObject
     public const PRECEDENCE = 10;
 
     public const SERIALIZABLE_NAMES = [
-        "INVALID",
-        "EPSILON",
-        "RANGE",
-        "RULE",
-        "PREDICATE",
-        "ATOM",
-        "ACTION",
-        "SET",
-        "NOT_SET",
-        "WILDCARD",
-        "PRECEDENCE"
+        'INVALID',
+        'EPSILON',
+        'RANGE',
+        'RULE',
+        'PREDICATE',
+        'ATOM',
+        'ACTION',
+        'SET',
+        'NOT_SET',
+        'WILDCARD',
+        'PRECEDENCE',
     ];
 
     public const SERIALIZATION_TYPES = [
@@ -76,7 +76,7 @@ abstract class Transition extends BaseObject
         $this->target = $target;
     }
 
-    public abstract function getSerializationType(): int;
+    abstract public function getSerializationType(): int;
 
     /**
      * Determines if the transition is an "epsilon" transition.
@@ -85,7 +85,7 @@ abstract class Transition extends BaseObject
      *
      * @return bool {@code true} if traversing this transition in the ATN does not
      * consume an input symbol; otherwise, {@code false} if traversing this
-     * transition consumes (matches) an input symbol.
+     * transition consumes (matches) an input symbol
      */
     public function isEpsilon(): bool
     {
@@ -97,5 +97,5 @@ abstract class Transition extends BaseObject
         return null;
     }
 
-    public abstract function matches(int $symbol, int $minVocabSymbol, int $maxVocabSymbol): bool;
+    abstract public function matches(int $symbol, int $minVocabSymbol, int $maxVocabSymbol): bool;
 }

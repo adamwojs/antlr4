@@ -11,7 +11,7 @@ use ANTLR\v4\Runtime\Misc\IdentityHashMap;
  * Associate a property with a parse tree node. Useful with parse tree listeners
  * that need to associate values with particular tree nodes, kind of like
  * specifying a return value for the listener event method that visited a
- * particular node. Example:
+ * particular node. Example:.
  *
  * <pre>
  * ParseTreeProperty&lt;Integer&gt; values = new ParseTreeProperty&lt;Integer&gt;();

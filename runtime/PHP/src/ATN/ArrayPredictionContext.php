@@ -82,7 +82,7 @@ class ArrayPredictionContext extends PredictionContext
             return true;
         }
 
-        if ($o instanceof ArrayPredictionContext) {
+        if ($o instanceof self) {
             if ($this->hash() !== $o->hash()) {
                 // can't be same if hash is different
                 return false;
@@ -101,7 +101,7 @@ class ArrayPredictionContext extends PredictionContext
         }
 
         $arr = [];
-        foreach($this->returnStates as $i => $returnState) {
+        foreach ($this->returnStates as $i => $returnState) {
             if ($returnState === self::EMPTY_RETURN_STATE) {
                 $arr[] = '$';
                 continue;

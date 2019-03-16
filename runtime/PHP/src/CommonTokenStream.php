@@ -47,8 +47,8 @@ class CommonTokenStream extends BufferedTokenStream
      * {@link Token#getType} equal to {@link Token#EOF} will be returned by the
      * token stream lookahead methods.
      *
-     * @param \ANTLR\v4\Runtime\TokenSource $tokenSource The token source.
-     * @param int $channel The channel to use for filtering tokens.
+     * @param \ANTLR\v4\Runtime\TokenSource $tokenSource the token source
+     * @param int $channel the channel to use for filtering tokens
      */
     public function __construct(TokenSource $tokenSource, int $channel = Token::DEFAULT_CHANNEL)
     {

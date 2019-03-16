@@ -65,7 +65,7 @@ class DFASerializer extends BaseObject
     public function __toString(): string
     {
         if ($this->dfa->s0 === null) {
-            return "";
+            return '';
         }
 
         $output = '';

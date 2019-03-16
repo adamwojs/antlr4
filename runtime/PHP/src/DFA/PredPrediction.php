@@ -13,7 +13,7 @@ use ANTLR\v4\Runtime\BaseObject;
 class PredPrediction extends BaseObject
 {
     /**
-     * never null; at least SemanticContext.NONE
+     * never null; at least SemanticContext.NONE.
      *
      * @var \ANTLR\v4\Runtime\ATN\SemanticContext
      */

@@ -27,15 +27,15 @@ abstract class Recognizer extends BaseObject
         $this->_listeners[] = new ConsoleErrorListener();
     }
 
-    public abstract function getTokenNames(): array;
+    abstract public function getTokenNames(): array;
 
-    public abstract function getRuleNames(): array;
+    abstract public function getRuleNames(): array;
 
     /**
      * Get the vocabulary used by the recognizer.
      *
-     * @return \ANTLR\v4\Runtime\VocabularyInterface A {@link Vocabulary} instance providing information about the
-     * vocabulary used by the grammar.
+     * @return \ANTLR\v4\Runtime\VocabularyInterface a {@link Vocabulary} instance providing information about the
+     * vocabulary used by the grammar
      */
     public function getVocabulary(): VocabularyInterface
     {
@@ -85,7 +85,7 @@ abstract class Recognizer extends BaseObject
      */
     public function getSerializedATN(): ?array
     {
-        throw new UnsupportedOperationException("There is no serialized ATN");
+        throw new UnsupportedOperationException('There is no serialized ATN');
     }
 
     /**
@@ -94,19 +94,19 @@ abstract class Recognizer extends BaseObject
      *
      * @return string
      */
-    public abstract function getGrammarFileName(): string;
+    abstract public function getGrammarFileName(): string;
 
     /**
      * Get the {@link ATN} used by the recognizer for prediction.
      *
-     * @return ATN The {@link ATN} used by the recognizer for prediction.
+     * @return ATN the {@link ATN} used by the recognizer for prediction
      */
-    public abstract function getATN(): ATN;
+    abstract public function getATN(): ATN;
 
     /**
      * Get the ATN interpreter used by the recognizer for prediction.
      *
-     * @return \ANTLR\v4\Runtime\ATN\ATNSimulator|null The ATN interpreter used by the recognizer for prediction.
+     * @return \ANTLR\v4\Runtime\ATN\ATNSimulator|null the ATN interpreter used by the recognizer for prediction
      */
     public function getInterpreter(): ?ATNSimulator
     {
@@ -116,8 +116,8 @@ abstract class Recognizer extends BaseObject
     /**
      * Set the ATN interpreter used by the recognizer for prediction.
      *
-     * @param \ANTLR\v4\Runtime\ATN\ATNSimulator $interpreter The ATN interpreter used by the recognizer for
-     * prediction.
+     * @param \ANTLR\v4\Runtime\ATN\ATNSimulator $interpreter the ATN interpreter used by the recognizer for
+     * prediction
      */
     public function setInterpreter(ATNSimulator $interpreter): void
     {
@@ -213,11 +213,11 @@ abstract class Recognizer extends BaseObject
         $this->_stateNumber = $atnState;
     }
 
-    public abstract function getInputStream(): IntStream;
+    abstract public function getInputStream(): IntStream;
 
-    public abstract function setInputStream(IntStream $input): void;
+    abstract public function setInputStream(IntStream $input): void;
 
-    public abstract function getTokenFactory(): TokenFactory;
+    abstract public function getTokenFactory(): TokenFactory;
 
-    public abstract function setTokenFactory(TokenFactory $factory): void;
+    abstract public function setTokenFactory(TokenFactory $factory): void;
 }

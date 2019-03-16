@@ -32,16 +32,16 @@ class Trees
             return $s;
         }
 
-        $buf = "(";
+        $buf = '(';
         $buf .= $s;
-        $buf .= " ";
+        $buf .= ' ';
         for ($i = 0; $i < $t->getChildCount(); $i++) {
             if ($i > 0) {
-                $buf .= " ";
+                $buf .= ' ';
             }
             $buf .= self::toStringTree($t->getChild($i), $recog);
         }
-        $buf .= ")";
+        $buf .= ')';
 
         return $buf;
     }
@@ -59,9 +59,9 @@ class Trees
                 }
 
                 return $ruleName;
-            } else if ($t instanceof ErrorNode) {
+            } elseif ($t instanceof ErrorNode) {
                 return (string)$t;
-            } else if ($t instanceof TerminalNode) {
+            } elseif ($t instanceof TerminalNode) {
                 $symbol = $t->getSymbol();
                 if ($symbol !== null) {
                     return $symbol->getText();
@@ -81,9 +81,9 @@ class Trees
     private static function escapeWhitespace(string $s, bool $escapeSpaces): string
     {
         return strtr($s, [
-            "\t" => "\\t",
-            "\n" => "\\n",
-            "\r" => "\\r",
+            "\t" => '\\t',
+            "\n" => '\\n',
+            "\r" => '\\r',
         ]);
     }
 }

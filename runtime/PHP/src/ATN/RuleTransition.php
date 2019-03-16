@@ -7,7 +7,7 @@ namespace ANTLR\v4\Runtime\ATN;
 final class RuleTransition extends Transition
 {
     /**
-     * Ptr to the rule definition object for this rule ref
+     * Ptr to the rule definition object for this rule ref.
      *
      * @var int
      */
@@ -17,7 +17,7 @@ final class RuleTransition extends Transition
     public $precedence;
 
     /**
-     * What node to begin computations following ref to rule
+     * What node to begin computations following ref to rule.
      *
      * @var \ANTLR\v4\Runtime\ATN\ATNState
      */

@@ -39,14 +39,14 @@ class LexerATNSimulator extends ATNSimulator
     protected $startIndex = -1;
 
     /**
-     * Line number 1..n within the input
+     * Line number 1..n within the input.
      *
      * @var int
      */
     protected $line = 1;
 
     /**
-     * The index of the character relative to the beginning of the line 0..n-1
+     * The index of the character relative to the beginning of the line 0..n-1.
      *
      * @var int
      */
@@ -56,7 +56,7 @@ class LexerATNSimulator extends ATNSimulator
     protected $mode = Lexer::DEFAULT_MODE;
 
     /**
-     * Used during DFA/ATN exec to record the most recent accept configuration info
+     * Used during DFA/ATN exec to record the most recent accept configuration info.
      *
      * @var \ANTLR\v4\Runtime\ATN\LexerATNSimulator\SimState
      */
@@ -71,7 +71,7 @@ class LexerATNSimulator extends ATNSimulator
         $this->prevAccept = new SimState();
     }
 
-    public function copyState(LexerATNSimulator $simulator): void
+    public function copyState(self $simulator): void
     {
         // TODO: Implement copyState() method
     }
@@ -91,8 +91,7 @@ class LexerATNSimulator extends ATNSimulator
             } else {
                 return $this->execATN($input, $dfa->s0);
             }
-        }
-        finally {
+        } finally {
             $input->release($mark);
         }
     }
@@ -118,7 +117,7 @@ class LexerATNSimulator extends ATNSimulator
             $this->decisionToDFA[$d] = new DFA($this->atn->getDecisionState($d), $d);
         }
     }
-    
+
     protected function matchATN(CharStream $input): int
     {
         $startState = $this->atn->modeToStartState[$this->mode];
@@ -390,7 +389,7 @@ class LexerATNSimulator extends ATNSimulator
      * @param bool $treatEofAsEpsilon
      *
      * @return bool {@code true} if an accept state is reached, otherwise
-     * {@code false}.
+     * {@code false}
      */
     protected function closure(
         CharStream $input,
@@ -404,9 +403,9 @@ class LexerATNSimulator extends ATNSimulator
             if ($config->context === null || $config->context->hasEmptyPath()) {
                 if ($config->context === null || $config->context->isEmpty()) {
                     $configs->add($config);
+
                     return true;
-                }
-                else {
+                } else {
                     $configs->add(LexerATNConfig::createFromLexerATNConfigAndATNState(
                         $config, $config->state, PredictionContext::createEmpty()
                     ));
@@ -417,7 +416,7 @@ class LexerATNSimulator extends ATNSimulator
             if ($config->context !== null && !$config->context->isEmpty()) {
                 for ($i = 0; $i < $config->context->size(); $i++) {
                     if ($config->context->getReturnState($i) !== PredictionContext::EMPTY_RETURN_STATE) {
-                        $newContext  = $config->context->getParent($i);
+                        $newContext = $config->context->getParent($i);
                         $returnState = $this->atn->states[$config->context->getReturnState($i)];
 
                         $currentAltReachedAcceptState = $this->closure(
@@ -474,7 +473,7 @@ class LexerATNSimulator extends ATNSimulator
                 return LexerATNConfig::createFromLexerATNConfigAndATNState($config, $t->target, SingletonPredictionContext::create($config->context, $t->followState->stateNumber));
                 break;
             case Transition::PRECEDENCE:
-                throw new UnsupportedOperationException("Precedence predicates are not supported in lexers.");
+                throw new UnsupportedOperationException('Precedence predicates are not supported in lexers.');
                 break;
             case Transition::PREDICATE:
                 // Track traversing semantic predicates. If we traverse,
@@ -519,8 +518,7 @@ class LexerATNSimulator extends ATNSimulator
                     );
 
                     return LexerATNConfig::createFromLexerATNConfigAndATNState($config, $t->target, null, $lexerActionExecutor);
-                }
-                else {
+                } else {
                     // ignore actions in referenced rules
                     return LexerATNConfig::createFromLexerATNConfigAndATNState($config, $t->target);
                 }
@@ -554,14 +552,14 @@ class LexerATNSimulator extends ATNSimulator
      * to the original state before returning (i.e. undo the actions made by the
      * call to {@link #consume}.</p>
      *
-     * @param \ANTLR\v4\Runtime\CharStream $input The input stream.
-     * @param int $ruleIndex The rule containing the predicate.
-     * @param int $predIndex The index of the predicate within the rule.
+     * @param \ANTLR\v4\Runtime\CharStream $input the input stream
+     * @param int $ruleIndex the rule containing the predicate
+     * @param int $predIndex the index of the predicate within the rule
      * @param bool $speculative {@code true} if the current index in {@code input} is
-     * one character before the predicate's location.
+     * one character before the predicate's location
      *
      * @return bool {@code true} if the specified predicate evaluates to
-     * {@code true}.
+     * {@code true}
      */
     protected function evaluatePredicate(CharStream $input, int $ruleIndex, int $predIndex, bool $speculative): bool
     {
@@ -581,9 +579,9 @@ class LexerATNSimulator extends ATNSimulator
 
         try {
             $this->consume($input);
+
             return $this->recog->sempred(null, $ruleIndex, $predIndex);
-        }
-        finally {
+        } finally {
             $this->charPositionInLine = $charPositionInLine;
             $this->line = $line;
 
@@ -638,6 +636,7 @@ class LexerATNSimulator extends ATNSimulator
         }
 
         $this->addDFAEdge($p, $t, $q);
+
         return $q;
     }
 
@@ -687,7 +686,7 @@ class LexerATNSimulator extends ATNSimulator
         return $newState;
     }
 
-    protected final function getDFA(int $mode): DFA
+    final protected function getDFA(int $mode): DFA
     {
         return $this->decisionToDFA[$mode];
     }

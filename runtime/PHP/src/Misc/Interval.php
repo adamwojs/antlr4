@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ANTLR\v4\Runtime\Misc;
 
 /**
- * An immutable inclusive interval a..b
+ * An immutable inclusive interval a..b.
  */
 class Interval
 {
@@ -44,7 +44,7 @@ class Interval
      * Return true if given $o is equal to this interval.
      *
      * @param mixed $o
-     * 
+     *
      * @return bool
      */
     public function equals($o): bool
@@ -53,7 +53,7 @@ class Interval
             return true;
         }
 
-        if ($o instanceof Interval) {
+        if ($o instanceof self) {
             return $this->a === $o->a && $this->b === $o->b;
         }
 
@@ -67,7 +67,7 @@ class Interval
      *
      * @return bool
      */
-    public function startsBeforeDisjoint(Interval $other): bool
+    public function startsBeforeDisjoint(self $other): bool
     {
         return $this->a < $other->a && $this->b < $other->a;
     }
@@ -79,43 +79,43 @@ class Interval
      *
      * @return bool
      */
-    public function startsBeforeNonDisjoint(Interval $other): bool
+    public function startsBeforeNonDisjoint(self $other): bool
     {
         return $this->a <= $other->a && $this->b >= $other->a;
     }
 
     /**
-     * Does this.a start after other.b? May or may not be disjoint
+     * Does this.a start after other.b? May or may not be disjoint.
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval $other
      *
      * @return bool
      */
-    public function startsAfter(Interval $other): bool
+    public function startsAfter(self $other): bool
     {
         return $this->a > $other->a;
     }
 
     /**
-     * Does this start completely after other? Disjoint
+     * Does this start completely after other? Disjoint.
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval $other
      *
      * @return bool
      */
-    public function startsAfterDisjoint(Interval $other): bool
+    public function startsAfterDisjoint(self $other): bool
     {
         return $this->a > $other->b;
     }
 
     /**
-     * Does this start after other? NonDisjoint
+     * Does this start after other? NonDisjoint.
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval $other
      *
      * @return bool
      */
-    public function startsAfterNonDisjoint(Interval $other): bool
+    public function startsAfterNonDisjoint(self $other): bool
     {
         return $this->a > $other->a && $this->a <= $other->b; // $this->>b >= $other->b implied
     }
@@ -127,7 +127,7 @@ class Interval
      *
      * @return bool
      */
-    public function disjoint(Interval $other): bool
+    public function disjoint(self $other): bool
     {
         return $this->startsBeforeDisjoint($other) || $this->startsAfterDisjoint($other);
     }
@@ -139,7 +139,7 @@ class Interval
      *
      * @return bool
      */
-    public function adjacent(Interval $other): bool
+    public function adjacent(self $other): bool
     {
         return $this->a === $other->b + 1 || $this->b === $other->a - 1;
     }
@@ -149,31 +149,31 @@ class Interval
      *
      * @return bool
      */
-    public function properlyContains(Interval $other): bool
+    public function properlyContains(self $other): bool
     {
         return $other->a >= $this->a && $other->b <= $this->b;
     }
 
     /**
-     * Return the interval computed from combining this and other
+     * Return the interval computed from combining this and other.
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval $other
      *
      * @return \ANTLR\v4\Runtime\Misc\Interval
      */
-    public function union(Interval $other): self
+    public function union(self $other): self
     {
         return self::of(min($this->a, $other->a), max($this->b, $other->b));
     }
 
     /**
-     * Return the interval in common between this and other
+     * Return the interval in common between this and other.
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval $other
      *
      * @return \ANTLR\v4\Runtime\Misc\Interval
      */
-    public function intersection(Interval $other): self
+    public function intersection(self $other): self
     {
         return self::of(max($this->a, $other->a), min($this->b, $other->b));
     }
@@ -188,7 +188,7 @@ class Interval
      *
      * @return \ANTLR\v4\Runtime\Misc\Interval|null
      */
-    public function differenceNotProperlyContained(Interval $other): ?self
+    public function differenceNotProperlyContained(self $other): ?self
     {
         if ($other->startsBeforeNonDisjoint($this)) {
             // $other->a to left of $this->>a (or same)
@@ -208,18 +208,18 @@ class Interval
         return "{$this->a}..{$this->b}";
     }
 
-    public static function getInvalid(): Interval
+    public static function getInvalid(): self
     {
         static $instance = null;
 
         if ($instance === null) {
-            $instance = new Interval(-1, -2);
+            $instance = new self(-1, -2);
         }
 
         return $instance;
     }
 
-    public static function of(int $a, int $b): Interval
+    public static function of(int $a, int $b): self
     {
         // TODO: Missing cache implementation
         return new self($a, $b);

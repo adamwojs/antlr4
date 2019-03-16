@@ -48,6 +48,7 @@ final class AltAndContextMap
             if ($this->comparator->equalsTo($entry->key, $key)) {
                 $prev = $entry->value;
                 $entry->value = $value;
+
                 return $prev;
             }
         }
@@ -59,7 +60,7 @@ final class AltAndContextMap
 
     public function values(): array
     {
-        return array_map(function(Pair $entry) {
+        return array_map(function (Pair $entry) {
             return $entry->value;
         }, $this->entries);
     }

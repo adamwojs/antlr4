@@ -26,7 +26,7 @@ class StringCharStream implements CharStream
         $this->data = $data;
         $this->name = $name;
         $this->size = strlen($data);
-        $this->pos  = 0;
+        $this->pos = 0;
     }
 
     /**
@@ -75,10 +75,10 @@ class StringCharStream implements CharStream
     {
         if ($this->size - $this->pos === 0) {
             assert($this->LA(1) === IntStream::EOF);
-            throw new IllegalStateException("cannot consume EOF");
+            throw new IllegalStateException('cannot consume EOF');
         }
 
-        $this->pos += 1;
+        $this->pos++;
     }
 
     /**

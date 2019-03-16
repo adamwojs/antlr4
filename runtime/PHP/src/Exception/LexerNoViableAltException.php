@@ -51,16 +51,16 @@ class LexerNoViableAltException extends RecognitionException
 
     public function toString(): string
     {
-        $symbol = "";
+        $symbol = '';
 
         /** @var \ANTLR\v4\Runtime\CharStream $input */
         $input = $this->getInputStream();
         if ($this->startIndex >= 0 && $this->startIndex < $input->size()) {
             $symbol = $input->getText(Interval::of($this->startIndex, $this->startIndex));
             $symbol = strtr($symbol, [
-                "\n" => "\\n",
-                "\t" => "\\t",
-                "\r" => "\\r"
+                "\n" => '\\n',
+                "\t" => '\\t',
+                "\r" => '\\r',
             ]);
         }
 

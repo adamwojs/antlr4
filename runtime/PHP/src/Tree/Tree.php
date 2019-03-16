@@ -16,7 +16,7 @@ interface Tree
      *
      * @return \ANTLR\v4\Runtime\Tree\Tree
      */
-    public function getParent(): Tree;
+    public function getParent(): self;
 
     /**
      * This method returns whatever object represents the data at this note. For
@@ -36,7 +36,7 @@ interface Tree
      *
      * @return \ANTLR\v4\Runtime\Tree\Tree|null
      */
-    public function getChild(int $i): ?Tree;
+    public function getChild(int $i): ?self;
 
     /**
      * How many children are there? If there is none, then this

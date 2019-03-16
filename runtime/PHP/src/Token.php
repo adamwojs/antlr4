@@ -64,7 +64,7 @@ interface Token
     public function getType(): int;
 
     /**
-     * The line number on which the 1st character of this token was matched, line=1..n
+     * The line number on which the 1st character of this token was matched, line=1..n.
      *
      * @return int
      */
@@ -72,7 +72,7 @@ interface Token
 
     /**
      * The index of the first character of this token relative to the
-     * beginning of the line at which it occurs, 0..n-1
+     * beginning of the line at which it occurs, 0..n-1.
      *
      * @return int
      */

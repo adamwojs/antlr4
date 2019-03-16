@@ -21,7 +21,7 @@ class AltAndContextConfigEqualityComparator implements EqualityComparator
     public function hashOf(?BaseObject $o): int
     {
         if (!($o instanceof ATNConfig)) {
-            throw new InvalidArgumentException(sprintf("Expected %s instance, got %s", ATNConfig::class, get_class($o)));
+            throw new InvalidArgumentException(sprintf('Expected %s instance, got %s', ATNConfig::class, get_class($o)));
         }
 
         $hash = MurmurHash::initialize(7);

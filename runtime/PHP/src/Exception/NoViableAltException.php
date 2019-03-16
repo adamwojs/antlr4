@@ -14,7 +14,7 @@ use ANTLR\v4\Runtime\TokenStream;
  * Indicates that the parser could not decide which of two or more paths
  * to take based upon the remaining input. It tracks the starting token
  * of the offending input and also knows where the parser was
- * in the various paths when the error. Reported by reportNoViableAlternative()
+ * in the various paths when the error. Reported by reportNoViableAlternative().
  */
 class NoViableAltException extends RecognitionException
 {
@@ -29,7 +29,7 @@ class NoViableAltException extends RecognitionException
      * The token object at the start index; the input stream might
      * not be buffering tokens so get a reference to it. (At the
      * time the error occurred, of course the stream needs to keep a
-     * buffer all of the tokens but later we might not have access to those.)
+     * buffer all of the tokens but later we might not have access to those.).
      *
      * @var \ANTLR\v4\Runtime\Token
      */

@@ -71,7 +71,7 @@ class DFA extends BaseObject
         $this->precedenceDfa = $precedenceDfa;
     }
 
-	/**
+    /**
      * Gets whether this DFA is a precedence DFA. Precedence DFAs use a special
      * start state {@link #s0} which is not stored in {@link #states}. The
      * {@link DFAState#edges} array for this start state contains outgoing edges
@@ -79,7 +79,7 @@ class DFA extends BaseObject
      * values.
      *
      * @return bool {@code true} if this is a precedence DFA; otherwise,
-     * {@code false}.
+     * {@code false}
      *
      * @see Parser#getPrecedence()
      */
@@ -91,19 +91,19 @@ class DFA extends BaseObject
     /**
      * Get the start state for a specific precedence value.
      *
-     * @param int $precedence The current precedence.
+     * @param int $precedence the current precedence
      *
-     * @return \ANTLR\v4\Runtime\DFA\DFAState|null The start state corresponding to the specified precedence, or
-     * {@code null} if no start state exists for the specified precedence.
+     * @return \ANTLR\v4\Runtime\DFA\DFAState|null the start state corresponding to the specified precedence, or
+     * {@code null} if no start state exists for the specified precedence
      *
-     * @throws \ANTLR\v4\Runtime\Exception\IllegalStateException if this is not a precedence DFA.
+     * @throws \ANTLR\v4\Runtime\Exception\IllegalStateException if this is not a precedence DFA
      *
      * @see #isPrecedenceDfa()
      */
     public function getPrecedenceStartState(int $precedence): ?DFAState
     {
         if (!$this->isPrecedenceDfa()) {
-            throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
+            throw new IllegalStateException('Only precedence DFAs may contain a precedence start state.');
         }
 
         // s0.edges is never null for a precedence DFA
@@ -117,17 +117,18 @@ class DFA extends BaseObject
     /**
      * Set the start state for a specific precedence value.
      *
-     * @param int $precedence The current precedence.
-     * @param \ANTLR\v4\Runtime\DFA\DFAState $startState The start state corresponding to the specified
-     * precedence.
+     * @param int $precedence the current precedence
+     * @param \ANTLR\v4\Runtime\DFA\DFAState $startState the start state corresponding to the specified
+     * precedence
      *
-     * @throws \ANTLR\v4\Runtime\Exception\IllegalStateException if this is not a precedence DFA.
+     * @throws \ANTLR\v4\Runtime\Exception\IllegalStateException if this is not a precedence DFA
+     *
      * @see #isPrecedenceDfa()
      */
     public function setPrecedenceStartState(int $precedence, DFAState $startState): void
     {
         if (!$this->isPrecedenceDfa()) {
-            throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
+            throw new IllegalStateException('Only precedence DFAs may contain a precedence start state.');
         }
 
         if ($precedence < 0) {
@@ -150,7 +151,7 @@ class DFA extends BaseObject
     public function getStates(): array
     {
         $result = $this->states->keys();
-        $result->sort(function(DFAState $o1, DFAState $o2) {
+        $result->sort(function (DFAState $o1, DFAState $o2) {
             return $o1->stateNumber - $o2->stateNumber;
         });
 
@@ -160,7 +161,7 @@ class DFA extends BaseObject
     public function toLexerString(): string
     {
         if ($this->s0 === null) {
-            return "";
+            return '';
         }
 
         return (string) (new LexerDFASerializer($this));
@@ -173,7 +174,7 @@ class DFA extends BaseObject
         }
 
         if ($this->s0 === null) {
-            return "";
+            return '';
         }
 
         return (string) (new DFASerializer($this, $vocabulary));

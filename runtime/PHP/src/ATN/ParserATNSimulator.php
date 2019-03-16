@@ -350,9 +350,9 @@ class ParserATNSimulator extends ATNSimulator
             }
 
             $ret = $this->execATN($dfa, $s0, $input, $idx, $outerContext);
+
             return $ret;
-        }
-        finally {
+        } finally {
             $this->mergeCache = null;
             $this->_dfa = null;
 
@@ -432,12 +432,12 @@ class ParserATNSimulator extends ATNSimulator
      * from being eliminated by the filter.
      * </p>
      *
-     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs The configuration set computed by
-     * {@link #computeStartState} as the start state for the DFA.
+     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs the configuration set computed by
+     * {@link #computeStartState} as the start state for the DFA
      *
-     * @return \ANTLR\v4\Runtime\ATN\ATNConfigSet The transformed configuration set representing the start state
+     * @return \ANTLR\v4\Runtime\ATN\ATNConfigSet the transformed configuration set representing the start state
      * for a precedence DFA at a particular precedence level (determined by
-     * calling {@link Parser#getPrecedence}).
+     * calling {@link Parser#getPrecedence})
      */
     protected function applyPrecedenceFilter(ATNConfigSet $configs): ATNConfigSet
     {
@@ -532,8 +532,7 @@ class ParserATNSimulator extends ATNSimulator
         TokenStream $input,
         int $startIndex,
         ParserRuleContext $outerContext
-    ): int
-    {
+    ): int {
         $previousD = $s0;
 
         $t = $input->LA(1);
@@ -590,6 +589,7 @@ class ParserATNSimulator extends ATNSimulator
 
                 $s0_closure = $this->computeStartState($dfa->atnStartState, $outerContext, true);
                 $this->reportAttemptingFullContext($dfa, $conflictingAlts, $D->configs, $startIndex, $input->index());
+
                 return $this->execATNWithFullContext($dfa, $D, $s0_closure, $input, $startIndex, $outerContext);
             }
 
@@ -611,6 +611,7 @@ class ParserATNSimulator extends ATNSimulator
                         // report ambiguity after predicate evaluation to make sure the correct
                         // set of ambig alts is reported.
                         $this->reportAmbiguity($dfa, $D, $startIndex, $stopIndex, false, $alts, $D->configs);
+
                         return $alts->nextSetBit(0);
                 }
             }
@@ -664,6 +665,7 @@ class ParserATNSimulator extends ATNSimulator
         if ($reach === null) {
             $ERROR = self::createError();
             $this->addDFAEdge($dfa, $previousD, $t, $ERROR);
+
             return $ERROR;
         }
 
@@ -676,7 +678,7 @@ class ParserATNSimulator extends ATNSimulator
             $D->isAcceptState = true;
             $D->configs->uniqueAlt = $predictedAlt;
             $D->predication = $predictedAlt;
-        } else if (PredictionMode::hasSLLConflictTerminatingPrediction($this->mode, $reach)) {
+        } elseif (PredictionMode::hasSLLConflictTerminatingPrediction($this->mode, $reach)) {
             // MORE THAN ONE VIABLE ALTERNATIVE
             $D->configs->conflictingAlts = $this->getConflictingAlts($reach);
             $D->requiresFullContext = true;
@@ -764,7 +766,7 @@ class ParserATNSimulator extends ATNSimulator
                 // Also don't pursue the closure if there is unique alternative
                 // among the configurations.
                 $reach = $intermediate;
-            } else if (self::getUniqueAlt($intermediate) !== ATN::INVALID_ALT_NUMBER) {
+            } elseif (self::getUniqueAlt($intermediate) !== ATN::INVALID_ALT_NUMBER) {
                 // Also don't pursue the closure if there is unique alternative
                 // among the configurations.
                 $reach = $intermediate;
@@ -849,7 +851,7 @@ class ParserATNSimulator extends ATNSimulator
      * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs the configuration set to update
      * @param bool $lookToEndOfRule when true, this method checks for rule stop states
      * reachable by epsilon-only transitions from each configuration in
-     * {@code configs}.
+     * {@code configs}
      *
      * @return {@code configs} if all configurations in {@code configs} are in a
      * rule stop state, otherwise return a new configuration set containing only
@@ -913,8 +915,7 @@ class ParserATNSimulator extends ATNSimulator
         TokenStream $input,
         int $startIndex,
         ParserRuleContext $outerContext
-    ): int
-    {
+    ): int {
         $fullCtx = true;
         $foundExactAmbig = false;
         $reach = null;
@@ -985,6 +986,7 @@ class ParserATNSimulator extends ATNSimulator
         // not SLL.
         if ($reach->uniqueAlt !== ATN::INVALID_ALT_NUMBER) {
             $this->reportContextSensitivity($dfa, $predictedAlt, $reach, $startIndex, $input->index());
+
             return $predictedAlt;
         }
 
@@ -1045,7 +1047,7 @@ class ParserATNSimulator extends ATNSimulator
         for ($i = 0; $i <= $nalts; $i++) {
             if ($altToPred[$i] === null) {
                 $altToPred[$i] = SemanticContext::NONE();
-            } else if ($altToPred[$i] !== SemanticContext::NONE()) {
+            } elseif ($altToPred[$i] !== SemanticContext::NONE()) {
                 $nPredAlts++;
             }
         }
@@ -1125,11 +1127,11 @@ class ParserATNSimulator extends ATNSimulator
      * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs The ATN configurations which were valid immediately before
      * the {@link #ERROR} state was reached
      * @param \ANTLR\v4\Runtime\ParserRuleContext outerContext The is the \gamma_0 initial parser context from the paper
-     * or the parser stack at the instant before prediction commences.
+     * or the parser stack at the instant before prediction commences
      *
-     * @return int The value to return from {@link #adaptivePredict}, or
+     * @return int the value to return from {@link #adaptivePredict}, or
      * {@link ATN#INVALID_ALT_NUMBER} if a suitable alternative was not
-     * identified and {@link #adaptivePredict} should report an error instead.
+     * identified and {@link #adaptivePredict} should report an error instead
      */
     protected function getSynValidOrSemInvalidAltThatFinishedDecisionEntryRule(
         ATNConfigSet $configs,
@@ -1202,12 +1204,10 @@ class ParserATNSimulator extends ATNSimulator
 
                 if ($predicateEvaluationResult) {
                     $succeeded->add($config);
-                }
-                else {
+                } else {
                     $failed->add($config);
                 }
-            }
-            else {
+            } else {
                 $succeeded->add($config);
             }
         }
@@ -1334,8 +1334,7 @@ class ParserATNSimulator extends ATNSimulator
                                 $config->reachesIntoOuterContext,
                                 $config->semanticContext
                             ), $this->mergeCache);
-                        }
-                        else {
+                        } else {
                             // we have no context info, just chase follow links (if greedy)
                             $this->closure_(
                                 $config, $configs, $closureBusy, $collectPredicates, $fullCtx, $depth, $treatEofAsEpsilon
@@ -1346,7 +1345,7 @@ class ParserATNSimulator extends ATNSimulator
                     }
 
                     $returnState = $this->atn->states[$config->context->getReturnState($i)];
-                    $newContext  = $config->context->getParent($i); //"pop" return state
+                    $newContext = $config->context->getParent($i); //"pop" return state
 
                     $c = new ATNConfig(
                         $returnState, $config->alt, $newContext, $config->reachesIntoOuterContext, $config->semanticContext
@@ -1367,14 +1366,13 @@ class ParserATNSimulator extends ATNSimulator
                     );
                 }
 
-                return ;
-            }
-            else if ($fullCtx) {
+                return;
+            } elseif ($fullCtx) {
                 // reached end of start rule
                 $configs->add($config, $this->mergeCache);
-                return ;
-            }
-            else {
+
+                return;
+            } else {
                 // else if we have no context info, just chase follow links (if greedy)
                 //trigger_error("FALLING off rule {$this->getRuleName($config->state->ruleIndex)}", E_USER_WARNING);
             }
@@ -1395,7 +1393,7 @@ class ParserATNSimulator extends ATNSimulator
     ): void {
         $p = $config->state;
         // optimization
-        if ( !$p->onlyHasEpsilonTransitions() ) {
+        if (!$p->onlyHasEpsilonTransitions()) {
             $configs->add($config, $this->mergeCache);
             // make sure to not return here, because EOF transitions can act as
             // both epsilon transitions and non-epsilon transitions.
@@ -1445,8 +1443,7 @@ class ParserATNSimulator extends ATNSimulator
                     $configs->dipsIntoOuterContext = true;
                     assert($newDepth > PHP_INT_MIN);
                     $newDepth--;
-                }
-                else {
+                } else {
                     if (!$t->isEpsilon()) {
                         if ($closureBusy->contains($c)) {
                             // avoid infinite recursion for EOF* and EOF+
@@ -1572,8 +1569,7 @@ class ParserATNSimulator extends ATNSimulator
         if ($p->getStateType() !== ATNState::STAR_LOOP_ENTRY ||
             !$p->isPrecedenceDecision ||                        // Are we the special loop entry/exit state?
             $config->context->isEmpty() ||                      // If SLL wildcard
-            $config->context->hasEmptyPath())
-        {
+            $config->context->hasEmptyPath()) {
             return false;
         }
 
@@ -1628,8 +1624,7 @@ class ParserATNSimulator extends ATNSimulator
             if ($returnStateTarget->getStateType() === ATNState::BLOCK_END &&
                 $returnStateTarget->getNumberOfTransitions() === 1 &&
                 $returnStateTarget->transition(0)->isEpsilon() &&
-                $returnStateTarget->transition(0)->target === $p)
-            {
+                $returnStateTarget->transition(0)->target === $p) {
                 continue;
             }
 
@@ -1656,7 +1651,7 @@ class ParserATNSimulator extends ATNSimulator
         switch ($t->getSerializationType()) {
             case Transition::RULE:
                 return $this->ruleTransition($config, $t);
-            case Transition::PRECEDENCE;
+            case Transition::PRECEDENCE:
                 return $this->precedenceTransition($config, $t, $collectPredicates, $inContext, $fullCtx);
             case Transition::PREDICATE:
                 return $this->predTransition($config, $t, $collectPredicates, $inContext, $fullCtx);
@@ -1732,8 +1727,7 @@ class ParserATNSimulator extends ATNSimulator
                         $config->semanticContext
                     ); // no pred context
                 }
-            }
-            else {
+            } else {
                 $newSemCtx = SemanticContext::and($config->semanticContext, $pt->getPredicate());
                 $c = new ATNConfig(
                     $pt->target,
@@ -1743,8 +1737,7 @@ class ParserATNSimulator extends ATNSimulator
                     $newSemCtx
                 );
             }
-        }
-        else {
+        } else {
             $c = new ATNConfig(
                 $pt->target,
                 $config->alt,
@@ -1767,8 +1760,7 @@ class ParserATNSimulator extends ATNSimulator
         $c = null;
 
         if ($collectPredicates
-            && (!$pt->isCtxDependent || ($pt->isCtxDependent && $inContext)))
-        {
+            && (!$pt->isCtxDependent || ($pt->isCtxDependent && $inContext))) {
             if ($fullCtx) {
                 // In full context mode, we can evaluate predicates on-the-fly
                 // during closure, which dramatically reduces the size of
@@ -1796,8 +1788,7 @@ class ParserATNSimulator extends ATNSimulator
                     $newSemCtx
                 );
             }
-        }
-        else {
+        } else {
             $c = new ATNConfig(
                 $pt->target,
                 $config->alt,
@@ -1828,7 +1819,7 @@ class ParserATNSimulator extends ATNSimulator
      * Gets a {@link BitSet} containing the alternatives in {@code configs}
      * which are part of one or more conflicting alternative subsets.
      *
-     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs The {@link ATNConfigSet} to analyze.
+     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet $configs the {@link ATNConfigSet} to analyze
      *
      * @return \ANTLR\v4\Runtime\Misc\BitSet The alternatives in {@code configs} which are part of one or more
      * conflicting alternative subsets. If {@code configs} does not contain any
@@ -1844,7 +1835,7 @@ class ParserATNSimulator extends ATNSimulator
     /**
      * Sam pointed out a problem with the previous definition, v3, of
      * ambiguous states. If we have another state associated with conflicting
-     * alternatives, we should keep going. For example, the following grammar
+     * alternatives, we should keep going. For example, the following grammar.
      *
      * s : (ID | ID ID?) ';' ;
      *
@@ -1888,8 +1879,7 @@ class ParserATNSimulator extends ATNSimulator
             $conflictingAlts->set($configs->uniqueAlt);
 
             return $conflictingAlts;
-        }
-        else {
+        } else {
             return $configs->conflictingAlts;
         }
     }

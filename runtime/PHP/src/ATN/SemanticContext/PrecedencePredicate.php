@@ -7,7 +7,6 @@ namespace ANTLR\v4\Runtime\ATN\SemanticContext;
 use ANTLR\v4\Runtime\ATN\SemanticContext;
 use ANTLR\v4\Runtime\Recognizer;
 use ANTLR\v4\Runtime\RuleContext;
-use Ds\Set;
 
 class PrecedencePredicate extends SemanticContext
 {
@@ -42,7 +41,7 @@ class PrecedencePredicate extends SemanticContext
         }
     }
 
-    public function compareTo(PrecedencePredicate $o): int
+    public function compareTo(self $o): int
     {
         return $this->precedence - $o->precedence;
     }
@@ -56,7 +55,7 @@ class PrecedencePredicate extends SemanticContext
             return true;
         }
 
-        if ($o instanceof PrecedencePredicate) {
+        if ($o instanceof self) {
             return $this->precedence === $o->precedence;
         }
 
@@ -77,12 +76,12 @@ class PrecedencePredicate extends SemanticContext
         return "{{$this->precedence}>=prec}?";
     }
 
-    public static function min(array $operands): PrecedencePredicate
+    public static function min(array $operands): self
     {
         $candidate = $operands[0];
 
         if (count($operands) > 1) {
-            foreach($operands as $operand) {
+            foreach ($operands as $operand) {
                 if ($operand->compareTo($candidate) < 0) {
                     $candidate = $operand;
                 }
@@ -92,12 +91,12 @@ class PrecedencePredicate extends SemanticContext
         return $candidate;
     }
 
-    public static function max(array $operands): PrecedencePredicate
+    public static function max(array $operands): self
     {
         $candidate = $operands[0];
 
         if (count($operands) > 1) {
-            foreach($operands as $operand) {
+            foreach ($operands as $operand) {
                 if ($operand->compareTo($candidate) > 0) {
                     $candidate = $operand;
                 }

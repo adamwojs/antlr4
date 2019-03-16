@@ -86,19 +86,19 @@ abstract class ATNState extends BaseObject
     public const LOOP_END = 12;
 
     public const SERIALIZABLE_NAMES = [
-        "INVALID",
-        "BASIC",
-        "RULE_START",
-        "BLOCK_START",
-        "PLUS_BLOCK_START",
-        "STAR_BLOCK_START",
-        "TOKEN_START",
-        "RULE_STOP",
-        "BLOCK_END",
-        "STAR_LOOP_BACK",
-        "STAR_LOOP_ENTRY",
-        "PLUS_LOOP_BACK",
-        "LOOP_END"
+        'INVALID',
+        'BASIC',
+        'RULE_START',
+        'BLOCK_START',
+        'PLUS_BLOCK_START',
+        'STAR_BLOCK_START',
+        'TOKEN_START',
+        'RULE_STOP',
+        'BLOCK_END',
+        'STAR_LOOP_BACK',
+        'STAR_LOOP_ENTRY',
+        'PLUS_LOOP_BACK',
+        'LOOP_END',
     ];
 
     public const INVALID_STATE_NUMBER = -1;
@@ -110,7 +110,7 @@ abstract class ATNState extends BaseObject
     public $stateNumber = self::INVALID_STATE_NUMBER;
 
     /**
-     * At runtime, we don't have Rule objects
+     * At runtime, we don't have Rule objects.
      *
      * @var int
      */
@@ -120,7 +120,7 @@ abstract class ATNState extends BaseObject
     public $epsilonOnlyTransitions = false;
 
     /**
-     * Used to cache lookahead during parsing, not used during construction
+     * Used to cache lookahead during parsing, not used during construction.
      *
      * @var \ANTLR\v4\Runtime\Misc\IntervalSet
      */
@@ -138,7 +138,7 @@ abstract class ATNState extends BaseObject
      */
     public function equals($o): bool
     {
-        if ($o instanceof ATNState) {
+        if ($o instanceof self) {
             // are these states same object?
             return $this->stateNumber === $o->stateNumber;
         }
@@ -174,7 +174,7 @@ abstract class ATNState extends BaseObject
 
         if (empty($this->transitions)) {
             $this->epsilonOnlyTransitions = $e->isEpsilon();
-        } else if ($this->epsilonOnlyTransitions !== $e->isEpsilon()) {
+        } elseif ($this->epsilonOnlyTransitions !== $e->isEpsilon()) {
             // TODO: Missing error log "ATN state {$this->stateNumber} has both epsilon and non-epsilon transitions."
             $this->epsilonOnlyTransitions = false;
         }
@@ -185,8 +185,7 @@ abstract class ATNState extends BaseObject
                 if ($t->label() !== null && $e->label() !== null && $t->label()->equals($e->label())) {
                     $alreadyPresent = true;
                     break;
-                }
-                else if ($t->isEpsilon() && $e->isEpsilon()) {
+                } elseif ($t->isEpsilon() && $e->isEpsilon()) {
                     $alreadyPresent = true;
                     break;
                 }
@@ -218,7 +217,7 @@ abstract class ATNState extends BaseObject
         return $e;
     }
 
-    public abstract function getStateType(): int;
+    abstract public function getStateType(): int;
 
     public function onlyHasEpsilonTransitions(): bool
     {

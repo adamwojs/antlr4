@@ -26,14 +26,14 @@ class ATNConfig extends BaseObject
     private const SUPPRESS_PRECEDENCE_FILTER = 0x40000000;
 
     /**
-     * The ATN state associated with this configuration
+     * The ATN state associated with this configuration.
      *
      * @var \ANTLR\v4\Runtime\ATN\ATNState
      */
     public $state;
 
     /**
-     * What alt (or lexer rule) is predicted by this configuration
+     * What alt (or lexer rule) is predicted by this configuration.
      *
      * @var int
      */
@@ -142,7 +142,7 @@ class ATNConfig extends BaseObject
             return true;
         }
 
-        if ($o instanceof ATNConfig) {
+        if ($o instanceof self) {
             return $o->state->stateNumber === $this->state->stateNumber
                 && $o->alt === $this->alt
                 && ($o->context === $this->context || ($this->context !== null && $this->context->equals($o->context)))
@@ -186,7 +186,7 @@ class ATNConfig extends BaseObject
      *
      * @return \ANTLR\v4\Runtime\ATN\ATNConfig
      */
-    public static function copy(ATNConfig $config): self
+    public static function copy(self $config): self
     {
         return new self(
             $config->state,
@@ -197,7 +197,7 @@ class ATNConfig extends BaseObject
         );
     }
 
-    public static function copyWithoutSemanticContext(ATNConfig $config, SemanticContext $semanticContext): self
+    public static function copyWithoutSemanticContext(self $config, SemanticContext $semanticContext): self
     {
         return new self(
             $config->state,

@@ -48,14 +48,14 @@ abstract class Lexer extends Recognizer implements TokenSource
     public $_tokenStartCharIndex;
 
     /**
-     * The line on which the first character of the token resides
+     * The line on which the first character of the token resides.
      *
      * @var int
      */
     public $_tokenStartLine;
 
     /**
-     * The character position of first character within the line
+     * The character position of first character within the line.
      *
      * @var int
      */
@@ -70,14 +70,14 @@ abstract class Lexer extends Recognizer implements TokenSource
     public $_hitEOF;
 
     /**
-     * The channel number for the current token
+     * The channel number for the current token.
      *
      * @var int
      */
     public $_channel;
 
     /**
-     * The token type for the current token
+     * The token type for the current token.
      *
      * @var int
      */
@@ -147,7 +147,7 @@ abstract class Lexer extends Recognizer implements TokenSource
     public function nextToken(): Token
     {
         if ($this->_input === null) {
-            throw new IllegalStateException("nextToken requires a non-null input stream.");
+            throw new IllegalStateException('nextToken requires a non-null input stream.');
         }
 
         // Mark start location in char stream so unbuffered streams are
@@ -158,6 +158,7 @@ abstract class Lexer extends Recognizer implements TokenSource
             while (true) {
                 if ($this->_hitEOF) {
                     $this->emitEOF();
+
                     return $this->_token;
                 }
 
@@ -475,7 +476,7 @@ abstract class Lexer extends Recognizer implements TokenSource
     public function notifyListeners(LexerNoViableAltException $e): void
     {
         $text = $this->_input->getText(Interval::of($this->_tokenStartCharIndex, $this->_input->index()));
-        $msg  = "token recognition error at: '{$this->getErrorDisplay($text)}'";
+        $msg = "token recognition error at: '{$this->getErrorDisplay($text)}'";
 
         $this->getErrorListenerDispatch()->syntaxError(
             $this, null, $this->_tokenStartLine, $this->_tokenStartCharPositionInLine, $msg, $e
@@ -485,10 +486,10 @@ abstract class Lexer extends Recognizer implements TokenSource
     public function getErrorDisplay(string $text): string
     {
         return strtr($text, [
-            Token::EOF => "<EOF>",
-            "\n" => "\\n",
-            "\t" => "\\t",
-            "\r" => "\\r"
+            Token::EOF => '<EOF>',
+            "\n" => '\\n',
+            "\t" => '\\t',
+            "\r" => '\\r',
         ]);
     }
 }

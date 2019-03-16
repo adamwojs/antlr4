@@ -85,7 +85,7 @@ class RuleContext extends BaseObject implements RuleNode
      * @param \ANTLR\v4\Runtime\RuleContext|null $parent
      * @param int $invokingState
      */
-    public function __construct(?RuleContext $parent = null, int $invokingState = 1)
+    public function __construct(?self $parent = null, int $invokingState = 1)
     {
         $this->parent = $parent;
         $this->invokingState = $invokingState;
@@ -125,7 +125,7 @@ class RuleContext extends BaseObject implements RuleNode
     /**
      * {@inheritdoc}
      */
-    public function getRuleContext(): RuleContext
+    public function getRuleContext(): self
     {
         return $this;
     }
@@ -160,7 +160,7 @@ class RuleContext extends BaseObject implements RuleNode
      */
     public function getText(): ?string
     {
-        $text = "";
+        $text = '';
 
         for ($i = 0; $i < $this->getChildCount(); $i++) {
             // TODO: \ANTLR\v4\Runtime\Tree\Tree::getText doesn't exists
@@ -205,7 +205,7 @@ class RuleContext extends BaseObject implements RuleNode
     /**
      * {@inheritdoc}
      */
-    public function setParent(RuleContext $parent): void
+    public function setParent(self $parent): void
     {
     }
 
@@ -245,9 +245,9 @@ class RuleContext extends BaseObject implements RuleNode
         return Trees::toStringTree($this, $parser);
     }
 
-    public function toString(array $ruleNames = null, ?RuleContext $stop = null): string
+    public function toString(array $ruleNames = null, ?self $stop = null): string
     {
-        $str = "";
+        $str = '';
 
         $p = $this;
         while ($p !== null && $p !== $stop) {
@@ -265,7 +265,7 @@ class RuleContext extends BaseObject implements RuleNode
             }
 
             if ($p->parent !== null && ($ruleNames !== null || !$p->parent->isEmpty())) {
-                $str .= " ";
+                $str .= ' ';
             }
 
             $p = $p->parent;
@@ -279,7 +279,7 @@ class RuleContext extends BaseObject implements RuleNode
         return $this->toString();
     }
 
-    public static function createEmpty(): RuleContext
+    public static function createEmpty(): self
     {
         static $empty = null;
         if ($empty === null) {

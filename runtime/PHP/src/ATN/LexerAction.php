@@ -14,7 +14,7 @@ interface LexerAction extends Hashable
      *
      * @see \ANTLR\v4\Runtime\ATN\LexerActionType
      *
-     * @return int The serialization type of the lexer action.
+     * @return int the serialization type of the lexer action
      */
     public function getActionType(): int;
 
@@ -30,7 +30,7 @@ interface LexerAction extends Hashable
      *
      * @return bool {@code true} if the lexer action semantics can be affected by the
      * position of the input {@link CharStream} at the time it is executed;
-     * otherwise, {@code false}.
+     * otherwise, {@code false}
      */
     public function isPositionDependent(): bool;
 
@@ -40,7 +40,7 @@ interface LexerAction extends Hashable
      * <p>For position-dependent actions, the input stream must already be
      * positioned correctly prior to calling this method.</p>
      *
-     * @param \ANTLR\v4\Runtime\Lexer lexer The lexer instance.
+     * @param \ANTLR\v4\Runtime\Lexer lexer The lexer instance
      */
     public function execute(Lexer $lexer): void;
 }

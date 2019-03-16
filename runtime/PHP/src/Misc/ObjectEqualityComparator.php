@@ -52,12 +52,12 @@ final class ObjectEqualityComparator implements EqualityComparator
         return $a->equals($b);
     }
 
-    public static function getInstance(): ObjectEqualityComparator
+    public static function getInstance(): self
     {
         static $instance = null;
 
         if ($instance === null) {
-            $instance = new ObjectEqualityComparator();
+            $instance = new self();
         }
 
         return $instance;

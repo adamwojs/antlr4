@@ -77,7 +77,6 @@ final class PredictionMode
      */
     public const LL_EXACT_AMBIG_DETECTION = 3;
 
-
     /**
      * Computes the SLL prediction termination condition.
      *
@@ -230,7 +229,7 @@ final class PredictionMode
             }
         }
 
-		return false;
+        return false;
     }
 
     /**
@@ -252,7 +251,7 @@ final class PredictionMode
             }
         }
 
-		return true;
+        return true;
     }
 
     /**
@@ -426,13 +425,13 @@ final class PredictionMode
      */
     public static function hasNonConflictingAltSet(array $altsets): bool
     {
-        foreach($altsets as $alts) {
+        foreach ($altsets as $alts) {
             if ($alts->cardinality() === 1) {
                 return true;
             }
         }
 
-		return false;
+        return false;
     }
 
     /**
@@ -537,7 +536,7 @@ final class PredictionMode
 
     /**
      * This function gets the conflicting alt subsets from a configuration set.
-     * For each configuration {@code c} in {@code configs}:
+     * For each configuration {@code c} in {@code configs}:.
      *
      * <pre>
      * map[c] U= c.{@link ATNConfig#alt alt} # map hash/equals uses s and x, not
@@ -567,7 +566,7 @@ final class PredictionMode
 
     /**
      * Get a map from state to alt subset from a configuration set. For each
-     * configuration {@code c} in {@code configs}:
+     * configuration {@code c} in {@code configs}:.
      *
      * <pre>
      * map[c.{@link ATNConfig#state state}] U= c.{@link ATNConfig#alt alt}

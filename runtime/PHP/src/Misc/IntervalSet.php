@@ -7,7 +7,6 @@ namespace ANTLR\v4\Runtime\Misc;
 use ANTLR\v4\Runtime\BaseObject;
 use ANTLR\v4\Runtime\Exception\IllegalStateException;
 use ANTLR\v4\Runtime\Token;
-use ANTLR\v4\Runtime\Vocabulary;
 use ANTLR\v4\Runtime\VocabularyInterface;
 use IntlChar;
 use RuntimeException;
@@ -61,7 +60,7 @@ class IntervalSet extends BaseObject implements IntSet
             return $this;
         }
 
-        if ($set instanceof IntervalSet) {
+        if ($set instanceof self) {
             foreach ($set->intervals as $interval) {
                 $this->add($interval->a, $interval->b);
             }
@@ -81,7 +80,7 @@ class IntervalSet extends BaseObject implements IntSet
         $this->throwIfReadonly();
         $this->intervals = new SplDoublyLinkedList();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -92,8 +91,8 @@ class IntervalSet extends BaseObject implements IntSet
             return null;
         }
 
-        if (!($set instanceof IntervalSet)) {
-            $set = (new IntervalSet())->addAll($set);
+        if (!($set instanceof self)) {
+            $set = (new self())->addAll($set);
         }
 
         return $set->substract($this);
@@ -106,7 +105,7 @@ class IntervalSet extends BaseObject implements IntSet
     {
         $n = $this->intervals->count();
         $l = 0;
-        $r =$n - 1;
+        $r = $n - 1;
 
         // Binary search for the element in the (sorted,
         // disjoint) array of intervals.
@@ -141,14 +140,14 @@ class IntervalSet extends BaseObject implements IntSet
     /**
      * Returns the maximum value contained in the set if not isNil().
      *
-     * @return int the maximum value contained in the set.
+     * @return int the maximum value contained in the set
      *
      * @throws \RuntimeException if set is empty
      */
     public function getMaxElement(): int
     {
         if ($this->isNil()) {
-            throw new RuntimeException("Set is empty");
+            throw new RuntimeException('Set is empty');
         }
 
         return $this->intervals[$this->intervals->count() - 1]->b;
@@ -157,14 +156,14 @@ class IntervalSet extends BaseObject implements IntSet
     /**
      * Returns the minimum value contained in the set if not isNil().
      *
-     * @return int the minimum value contained in the set.
+     * @return int the minimum value contained in the set
      *
      * @throws \RuntimeException if set is empty
      */
     public function getMinElement(): int
     {
         if ($this->isNil()) {
-            throw new RuntimeException("Set is empty");
+            throw new RuntimeException('Set is empty');
         }
 
         return $this->intervals[0]->a;
@@ -228,15 +227,14 @@ class IntervalSet extends BaseObject implements IntSet
     /**
      * {@inheritdoc}
      */
-
     public function and(IntSet $set): IntSet
     {
-        if ($set === null || !($set instanceof IntervalSet)) {
+        if ($set === null || !($set instanceof self)) {
             // nothing in common with null set
             return null;
         }
 
-        $intersection = new IntervalSet();
+        $intersection = new self();
 
         $an = $this->intervals->count();
         $bn = $set->intervals->count();
@@ -253,18 +251,18 @@ class IntervalSet extends BaseObject implements IntSet
             if ($a->startsBeforeDisjoint($b)) {
                 // move this iterator looking for interval that might overlap
                 $i++;
-            } else if ($b->startsBeforeDisjoint($a)) {
+            } elseif ($b->startsBeforeDisjoint($a)) {
                 // move other iterator looking for interval that might overlap
                 $j++;
-            } else if ($a->properlyContains($b)) {
+            } elseif ($a->properlyContains($b)) {
                 // overlap, add intersection, get next theirs
                 $intersection->doAdd($a->intersection($b));
                 $j++;
-            } else if ($b->properlyContains($a)) {
+            } elseif ($b->properlyContains($a)) {
                 // overlap, add intersection, get next mine
                 $intersection->doAdd($a->intersection($b));
                 $i++;
-            } else if (!$a->disjoint($b)) {
+            } elseif (!$a->disjoint($b)) {
                 // overlap, add intersection
                 $intersection->doAdd($a->intersection($b));
 
@@ -277,7 +275,7 @@ class IntervalSet extends BaseObject implements IntSet
                 // move both iterators to next ranges
                 if ($a->startsAfterNonDisjoint($b)) {
                     $j++;
-                } else if ($b->startsAfterNonDisjoint($a)) {
+                } elseif ($b->startsAfterNonDisjoint($a)) {
                     $i++;
                 }
             }
@@ -291,7 +289,7 @@ class IntervalSet extends BaseObject implements IntSet
      */
     public function or(IntSet $set): IntSet
     {
-        $result = new IntervalSet();
+        $result = new self();
         $result->addAll($this);
         $result->addAll($set);
 
@@ -307,8 +305,8 @@ class IntervalSet extends BaseObject implements IntSet
             return self::copy($this);
         }
 
-        if (!($set instanceof IntervalSet)) {
-            $set = (new IntervalSet())->addAll($set);
+        if (!($set instanceof self)) {
+            $set = (new self())->addAll($set);
         }
 
         return $this->doSubtract($this, $set);
@@ -324,10 +322,10 @@ class IntervalSet extends BaseObject implements IntSet
      *
      * @return \ANTLR\v4\Runtime\Misc\IntervalSet
      */
-    private function doSubtract(?IntervalSet $left, ?IntervalSet $right): IntervalSet
+    private function doSubtract(?self $left, ?self $right): self
     {
         if ($left === null || $left->isNil()) {
-            return new IntervalSet();
+            return new self();
         }
 
         $result = self::copy($left);
@@ -367,7 +365,6 @@ class IntervalSet extends BaseObject implements IntSet
                     // split the current interval into two
                     $result->intervals[$resultI] = $beforeCurrent;
                     $result->intervals->add($resultI + 1, $afterCurrent);
-
 
                     $resultI++;
                     $rightI++;
@@ -436,7 +433,7 @@ class IntervalSet extends BaseObject implements IntSet
         foreach ($this->intervals as $interval) {
             $a = $interval->a;
             $b = $interval->b;
-            for($v = $a; $v <= $b; $v++) {
+            for ($v = $a; $v <= $b; $v++) {
                 $values[] = $v;
             }
         }
@@ -495,8 +492,7 @@ class IntervalSet extends BaseObject implements IntSet
 
             if ($a === $b) {
                 $items[] = $this->elementName($vocabulary, $a);
-            }
-            else {
+            } else {
                 for ($i = $a; $i <= $b; $i++) {
                     $items[] = $this->elementName($vocabulary, $i);
                 }
@@ -542,7 +538,7 @@ class IntervalSet extends BaseObject implements IntSet
      */
     public function equals($o): bool
     {
-        if ($o === null || !($o instanceof IntervalSet)) {
+        if ($o === null || !($o instanceof self)) {
             return false;
         }
 
@@ -589,6 +585,7 @@ class IntervalSet extends BaseObject implements IntSet
 
             if ($addition->startsBeforeDisjoint($r)) {
                 $this->intervals->add($i, $addition);
+
                 return;
             }
 
@@ -611,6 +608,7 @@ class IntervalSet extends BaseObject implements IntSet
                 }
 
                 $this->intervals[$i] = $bigger;
+
                 return;
             }
 
@@ -628,17 +626,17 @@ class IntervalSet extends BaseObject implements IntSet
      *
      * @return \ANTLR\v4\Runtime\Misc\IntervalSet
      */
-    public static function of(int $a, ?int $b = null): IntervalSet
+    public static function of(int $a, ?int $b = null): self
     {
-        $set = new IntervalSet();
+        $set = new self();
         $set->add($a, $b);
 
         return $set;
     }
 
-    public static function copy(IntervalSet $source): IntervalSet
+    public static function copy(self $source): self
     {
-        $set = new IntervalSet();
+        $set = new self();
         $set->addAll($source);
 
         return $set;

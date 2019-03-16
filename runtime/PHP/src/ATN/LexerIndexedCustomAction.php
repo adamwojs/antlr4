@@ -32,11 +32,11 @@ final class LexerIndexedCustomAction extends BaseObject implements LexerAction
      * <p>Note: This class is only required for lexer actions for which
      * {@link LexerAction#isPositionDependent} returns {@code true}.</p>
      *
-     * @param int $offset The offset into the input {@link CharStream}, relative to
+     * @param int $offset the offset into the input {@link CharStream}, relative to
      * the token start index, at which the specified lexer action should be
-     * executed.
-     * @param \ANTLR\v4\Runtime\ATN\LexerAction $action The lexer action to execute at a particular offset in the
-     * input {@link CharStream}.
+     * executed
+     * @param \ANTLR\v4\Runtime\ATN\LexerAction $action the lexer action to execute at a particular offset in the
+     * input {@link CharStream}
      */
     public function __construct(int $offset, LexerAction $action)
     {
@@ -49,8 +49,8 @@ final class LexerIndexedCustomAction extends BaseObject implements LexerAction
      * action should be executed. The value is interpreted as an offset relative
      * to the token start index.
      *
-     * @return int The location in the input {@link CharStream} at which the lexer
-     * action should be executed.
+     * @return int the location in the input {@link CharStream} at which the lexer
+     * action should be executed
      */
     public function getOffset(): int
     {
@@ -60,7 +60,7 @@ final class LexerIndexedCustomAction extends BaseObject implements LexerAction
     /**
      * Gets the lexer action to execute.
      *
-     * @return \ANTLR\v4\Runtime\ATN\LexerAction A {@link LexerAction} object which executes the lexer action.
+     * @return \ANTLR\v4\Runtime\ATN\LexerAction a {@link LexerAction} object which executes the lexer action
      */
     public function getAction(): LexerAction
     {
@@ -104,7 +104,7 @@ final class LexerIndexedCustomAction extends BaseObject implements LexerAction
             return true;
         }
 
-        if ($o instanceof LexerIndexedCustomAction) {
+        if ($o instanceof self) {
             return $o->getOffset() === $this->getOffset()
                 && $o->getAction()->equals($this->getAction());
         }

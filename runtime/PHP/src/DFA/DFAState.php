@@ -140,7 +140,7 @@ class DFAState extends BaseObject
             return true;
         }
 
-        if ($o instanceof DFAState) {
+        if ($o instanceof self) {
             return $this->configs === null || $this->configs->equals($o->configs);
         }
 

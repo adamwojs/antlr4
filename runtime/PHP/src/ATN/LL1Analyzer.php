@@ -40,7 +40,8 @@ class LL1Analyzer extends BaseObject
      * element at index <em>i</em> of the result will be {@code null}.
      *
      * @param \ANTLR\v4\Runtime\ATN\ATNState $state the ATN state
-     * @return \ANTLR\v4\Runtime\Misc\IntervalSet[] the expected symbols for each outgoing transition of {@code s}.
+     *
+     * @return \ANTLR\v4\Runtime\Misc\IntervalSet[] the expected symbols for each outgoing transition of {@code s}
      */
     public function getDecisionLookahead(ATNState $state): array
     {
@@ -88,8 +89,8 @@ class LL1Analyzer extends BaseObject
      * @param \ANTLR\v4\Runtime\RuleContext|null ctx the complete parser context, or {@code null} if the context
      * should be ignored
      *
-     * @return \ANTLR\v4\Runtime\Misc\IntervalSet The set of tokens that can follow {@code s} in the ATN in the
-     * specified {@code ctx}.
+     * @return \ANTLR\v4\Runtime\Misc\IntervalSet the set of tokens that can follow {@code s} in the ATN in the
+     * specified {@code ctx}
      */
     public function LOOK(ATNState $s, ?ATNState $stopState, ?RuleContext $ctx): IntervalSet
     {
@@ -116,12 +117,12 @@ class LL1Analyzer extends BaseObject
      * {@code true} and {@code stopState} or the end of the outermost rule is
      * reached, {@link Token#EOF} is added to the result set.</p>
      *
-     * @param \ANTLR\v4\Runtime\ATN\ATNState $s the ATN state.
+     * @param \ANTLR\v4\Runtime\ATN\ATNState $s the ATN state
      * @param \ANTLR\v4\Runtime\ATN\ATNState $stopState the ATN state to stop at. This can be a
      * {@link BlockEndState} to detect epsilon paths through a closure.
-     * @param \ANTLR\v4\Runtime\ATN\PredictionContext $ctx The outer context, or {@code null} if the outer context should
-     * not be used.
-     * @param \ANTLR\v4\Runtime\Misc\IntervalSet look The result lookahead set.
+     * @param \ANTLR\v4\Runtime\ATN\PredictionContext $ctx the outer context, or {@code null} if the outer context should
+     * not be used
+     * @param \ANTLR\v4\Runtime\Misc\IntervalSet look The result lookahead set
      * @param \ANTLR\v4\Runtime\ATN\ATNConfig[] lookBusy A set used for preventing epsilon closures in the ATN
      * from causing a stack overflow. Outside code should pass
      * {@code new HashSet<ATNConfig>} for this argument.
@@ -131,7 +132,7 @@ class LL1Analyzer extends BaseObject
      * @param bool seeThruPreds {@code true} to true semantic predicates as
      * implicitly {@code true} and "see through them", otherwise {@code false}
      * to treat semantic predicates as opaque and add {@link #HIT_PRED} to the
-     * result if one is encountered.
+     * result if one is encountered
      * @param bool $addEOF Add {@link Token#EOF} to the result if the end of the
      * outermost context is reached. This parameter has no effect if {@code ctx}
      * is {@code null}.
@@ -157,22 +158,26 @@ class LL1Analyzer extends BaseObject
         if ($s === $stopState) {
             if ($ctx === null) {
                 $look->add(Token::EPSILON);
+
                 return;
             }
 
             if ($ctx->isEmpty() && $addEOF) {
                 $look->add(Token::EOF);
-                return ;
+
+                return;
             }
         }
 
         if ($s instanceof RuleStopState) {
             if ($ctx === null) {
                 $look->add(Token::EPSILON);
+
                 return;
             } elseif ($ctx->isEmpty() && $addEOF) {
                 $look->add(Token::EOF);
-                return ;
+
+                return;
             }
 
             if ($ctx !== PredictionContext::createEmpty()) {
@@ -211,7 +216,7 @@ class LL1Analyzer extends BaseObject
                 } finally {
                     $calledRuleStack->clear($t->target->ruleIndex);
                 }
-            } elseif($t instanceof AbstractPredicateTransition)  {
+            } elseif ($t instanceof AbstractPredicateTransition) {
                 if ($seeThruPreds) {
                     $this->_LOOK($t->target, $stopState, $ctx, $look, $lookBusy, $calledRuleStack, $seeThruPreds, $addEOF);
                 } else {

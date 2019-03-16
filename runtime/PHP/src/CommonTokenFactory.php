@@ -39,7 +39,7 @@ class CommonTokenFactory implements TokenFactory
      * When {@code copyText} is {@code false}, the {@link #DEFAULT} instance
      * should be used instead of constructing a new instance.</p>
      *
-     * @param bool $copyText The value for {@link #copyText}.
+     * @param bool $copyText the value for {@link #copyText}
      */
     public function __construct(bool $copyText = false)
     {
@@ -67,7 +67,7 @@ class CommonTokenFactory implements TokenFactory
         $token->setCharPositionInLine($charPositionInLine);
         if ($text !== null) {
             $token->setText($text);
-        } else if ($this->copyText && $source->b !== null) {
+        } elseif ($this->copyText && $source->b !== null) {
             $token->setText($source->b->getText(Interval::of($start, $stop)));
         }
 
@@ -90,12 +90,12 @@ class CommonTokenFactory implements TokenFactory
      *
      * @return \ANTLR\v4\Runtime\CommonTokenFactory
      */
-    public static function getDefault(): CommonTokenFactory
+    public static function getDefault(): self
     {
         static $instance = null;
 
         if ($instance === null) {
-            $instance = new CommonTokenFactory();
+            $instance = new self();
         }
 
         return $instance;

@@ -115,7 +115,7 @@ class TerminalNodeImpl extends BaseObject implements TerminalNode
     public function __toString(): string
     {
         if ($this->symbol->getType() === Token::EOF) {
-            return "<EOF>";
+            return '<EOF>';
         }
 
         return $this->symbol->getText();

@@ -8,7 +8,7 @@ use ANTLR\v4\Runtime\ParserRuleContext;
 
 /**
  * This interface describes the minimal core of methods triggered
- * by {@link ParseTreeWalker}. E.g.,
+ * by {@link ParseTreeWalker}. E.g.,.
  *
  * 	ParseTreeWalker walker = new ParseTreeWalker();
  *	walker.walk(myParseTreeListener, myParseTree); <-- triggers events in your listener

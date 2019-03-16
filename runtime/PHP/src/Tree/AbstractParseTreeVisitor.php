@@ -80,7 +80,7 @@ abstract class AbstractParseTreeVisitor extends BaseObject implements ParseTreeV
      *
      * <p>The base implementation returns {@code null}.</p>
      *
-     * @return mixed The default value returned by visitor methods.
+     * @return mixed the default value returned by visitor methods
      */
     protected function defaultResult()
     {
@@ -102,9 +102,9 @@ abstract class AbstractParseTreeVisitor extends BaseObject implements ParseTreeV
      * {@link #defaultResult}, which is passed as the {@code aggregate} argument
      * to this method after the first child node is visited.
      * @param mixed nextResult The result of the immediately preceeding call to visit
-     * a child node.
+     * a child node
      *
-     * @return mixed The updated aggregate result.
+     * @return mixed the updated aggregate result
      */
     protected function aggregateResult($aggregate, $nextResult)
     {
@@ -127,9 +127,9 @@ abstract class AbstractParseTreeVisitor extends BaseObject implements ParseTreeV
      * a whole.</p>
      *
      * @param \ANTLR\v4\Runtime\Tree\RuleNode node The {@link RuleNode} whose children are currently being
-     * visited.
+     * visited
      * @param mixed currentResult The current aggregate result of the children visited
-     * to the current point.
+     * to the current point
      *
      * @return bool {@code true} to continue visiting children. Otherwise return
      * {@code false} to stop visiting children and immediately return the

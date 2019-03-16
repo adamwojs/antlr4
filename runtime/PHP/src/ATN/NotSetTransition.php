@@ -29,6 +29,6 @@ final class NotSetTransition extends SetTransition
      */
     public function __toString(): string
     {
-        return "~" . parent::__toString();
+        return '~' . parent::__toString();
     }
 }

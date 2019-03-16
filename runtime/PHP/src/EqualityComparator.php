@@ -17,19 +17,19 @@ interface EqualityComparator
     /**
      * This method returns a hash code for the specified object.
      *
-     * @param mixed $obj The object.
+     * @param mixed $obj the object
      *
-     * @return int The hash code for {@code obj}.
+     * @return int the hash code for {@code obj}
      */
     public function hashOf(?BaseObject $obj): int;
 
     /**
      * This method tests if two objects are equal.
      *
-     * @param mixed $a The first object to compare.
-     * @param mixed $b The second object to compare.
+     * @param mixed $a the first object to compare
+     * @param mixed $b the second object to compare
      *
-     * @return {@code true} if {@code a} equals {@code b}, otherwise {@code false}.
+     * @return {@code true} if {@code a} equals {@code b}, otherwise {@code false}
      */
     public function equalsTo(?BaseObject $a, ?BaseObject $b): bool;
 }

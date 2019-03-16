@@ -69,7 +69,7 @@ interface TokenStream extends IntStream
      * String text = stream.getText(new Interval(0, stream.size()));
      * </pre>
      *
-     * @return string The text of all tokens in the stream.
+     * @return string the text of all tokens in the stream
      */
     public function getText(): string;
 
@@ -88,10 +88,10 @@ interface TokenStream extends IntStream
      * </pre>
      *
      * @param \ANTLR\v4\Runtime\Misc\Interval interval The interval of tokens within this stream to get text
-     * for.
+     * for
      *
-     * @return string The text of all tokens within the specified interval in this
-     * stream.
+     * @return string the text of all tokens within the specified interval in this
+     * stream
      *
      * @throws \ANTLR\v4\Runtime\Exception\NullPointerException if {@code interval} is {@code null}
      */
@@ -111,10 +111,10 @@ interface TokenStream extends IntStream
      * String text = stream.getText(ctx.getSourceInterval());
      * </pre>
      *
-     * @param \ANTLR\v4\Runtime\RuleContext $ctx The context providing the source interval of tokens to get
-     * text for.
+     * @param \ANTLR\v4\Runtime\RuleContext $ctx the context providing the source interval of tokens to get
+     * text for
      *
-     * @return string The text of all tokens within the source interval of {@code ctx}.
+     * @return string the text of all tokens within the source interval of {@code ctx}
      */
     public function getTextForRuleContext(RuleContext $ctx): string;
 
@@ -139,11 +139,11 @@ interface TokenStream extends IntStream
      * }
      * </pre>
      *
-     * @param \ANTLR\v4\Runtime\Token|null $start The first token in the interval to get text for.
-     * @param \ANTLR\v4\Runtime\Token|null $stop The last token in the interval to get text for (inclusive).
+     * @param \ANTLR\v4\Runtime\Token|null $start the first token in the interval to get text for
+     * @param \ANTLR\v4\Runtime\Token|null $stop the last token in the interval to get text for (inclusive)
      *
-     * @return string The text of all tokens lying between the specified {@code start}
-     * and {@code stop} tokens.
+     * @return string the text of all tokens lying between the specified {@code start}
+     * and {@code stop} tokens
      *
      * @throws \ANTLR\v4\Runtime\Exception\UnsupportedOperationException if this stream does not support
      * this method for the specified tokens

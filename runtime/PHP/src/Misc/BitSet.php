@@ -71,7 +71,7 @@ final class BitSet extends BaseObject
      *
      * @param \ANTLR\v4\Runtime\Misc\BitSet $set
      */
-    public function or(BitSet $set): void
+    public function or(self $set): void
     {
         $this->data = gmp_or($this->data, $set->data);
     }
@@ -85,7 +85,7 @@ final class BitSet extends BaseObject
             return true;
         }
 
-        if ($o instanceof BitSet) {
+        if ($o instanceof self) {
             return gmp_cmp($this->data, $o->data) === 0;
         }
 
@@ -101,7 +101,6 @@ final class BitSet extends BaseObject
             $bits[] = $idx;
         }
 
-        return "{" . implode(', ', $bits) . "}";
-
+        return '{' . implode(', ', $bits) . '}';
     }
 }

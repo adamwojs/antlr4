@@ -49,12 +49,12 @@ class ConfigEqualityComparator extends BaseObject implements EqualityComparator
             && $a->semanticContext->equals($b->semanticContext);
     }
 
-    public static function getInstance(): ConfigEqualityComparator
+    public static function getInstance(): self
     {
         static $instance = null;
 
         if ($instance === null) {
-            $instance = new ConfigEqualityComparator();
+            $instance = new self();
         }
 
         return $instance;

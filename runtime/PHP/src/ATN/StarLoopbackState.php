@@ -6,7 +6,7 @@ namespace ANTLR\v4\Runtime\ATN;
 
 final class StarLoopbackState extends ATNState
 {
-    public final function getLoopEntryState(): StarLoopEntryState
+    public function getLoopEntryState(): StarLoopEntryState
     {
         return $this->transition(0)->target;
     }

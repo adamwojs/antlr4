@@ -33,7 +33,7 @@ class Pair extends BaseObject
             return true;
         }
 
-        if ($o instanceof Pair) {
+        if ($o instanceof self) {
             return ObjectEqualityComparator::getInstance()->equalsTo($this->a, $o->a)
                 && ObjectEqualityComparator::getInstance()->equalsTo($this->b, $o->b);
         }

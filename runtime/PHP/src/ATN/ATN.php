@@ -87,7 +87,7 @@ class ATN extends BaseObject
     public $modeNameToStartState;
 
     /**
-     * Used for runtime deserialization of ATNs from strings
+     * Used for runtime deserialization of ATNs from strings.
      *
      * @param int $grammarType
      * @param int $maxTokenType
@@ -120,6 +120,7 @@ class ATN extends BaseObject
      * rule.
      *
      * @param \ANTLR\v4\Runtime\ATN\ATNState $state
+     *
      * @return \ANTLR\v4\Runtime\Misc\IntervalSet
      */
     public function nextTokensForATNState(ATNState $state): IntervalSet
@@ -154,6 +155,7 @@ class ATN extends BaseObject
     {
         $this->decisionToState[] = $state;
         $state->decision = count($this->decisionToState) - 1;
+
         return $state->decision;
     }
 
@@ -201,8 +203,8 @@ class ATN extends BaseObject
      * @param int $stateNumber the ATN state number
      * @param \ANTLR\v4\Runtime\RuleContext $context the full parse context
      *
-     * @return \ANTLR\v4\Runtime\Misc\IntervalSet The set of potentially valid input symbols which could follow the
-     * specified state in the specified context.
+     * @return \ANTLR\v4\Runtime\Misc\IntervalSet the set of potentially valid input symbols which could follow the
+     * specified state in the specified context
      *
      * @throws IllegalArgumentException if the ATN does not contain a state with
      * number {@code stateNumber}
@@ -210,7 +212,7 @@ class ATN extends BaseObject
     public function getExpectedTokens(int $stateNumber, RuleContext $context): IntervalSet
     {
         if ($stateNumber < 0 || $stateNumber >= count($this->states)) {
-            throw new InvalidArgumentException("Invalid state number");
+            throw new InvalidArgumentException('Invalid state number');
         }
 
         $following = $this->nextTokensForATNState($this->states[$stateNumber]);

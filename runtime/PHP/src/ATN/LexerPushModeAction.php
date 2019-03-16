@@ -15,7 +15,7 @@ final class LexerPushModeAction extends BaseObject implements LexerAction
     /**
      * Constructs a new {@code pushMode} action with the specified mode value.
      *
-     * @param int $mode The mode value to pass to {@link Lexer#pushMode}.
+     * @param int $mode the mode value to pass to {@link Lexer#pushMode}
      */
     public function __construct(int $mode)
     {
@@ -25,7 +25,7 @@ final class LexerPushModeAction extends BaseObject implements LexerAction
     /**
      * Get the lexer mode this action should transition the lexer to.
      *
-     * @return int The lexer mode for this {@code pushMode} command.
+     * @return int the lexer mode for this {@code pushMode} command
      */
     public function getMode(): int
     {
@@ -68,7 +68,7 @@ final class LexerPushModeAction extends BaseObject implements LexerAction
             return true;
         }
 
-        if ($o instanceof LexerPushModeAction) {
+        if ($o instanceof self) {
             return $o->getMode() === $this->getMode();
         }
 

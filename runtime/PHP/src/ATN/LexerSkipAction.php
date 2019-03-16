@@ -65,13 +65,13 @@ final class LexerSkipAction extends BaseObject implements LexerAction
 
     public function __toString(): string
     {
-        return "skip";
+        return 'skip';
     }
 
-    public static function getInstance(): LexerSkipAction
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new LexerSkipAction();
+            self::$instance = new self();
         }
 
         return self::$instance;

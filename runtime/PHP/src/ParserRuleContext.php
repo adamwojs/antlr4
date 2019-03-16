@@ -60,7 +60,7 @@ class ParserRuleContext extends RuleContext
      */
     public $exception;
 
-    public function __construct(ParserRuleContext $parent = null, int $invokingStateNumber = -1)
+    public function __construct(self $parent = null, int $invokingStateNumber = -1)
     {
         parent::__construct($parent, $invokingStateNumber);
     }
@@ -105,7 +105,7 @@ class ParserRuleContext extends RuleContext
 
     public function enterRule(ParseTreeListener $listener): void
     {
-        return ;
+        return;
     }
 
     public function exitRule(ParseTreeListener $listener): void
@@ -134,7 +134,6 @@ class ParserRuleContext extends RuleContext
         $this->children[] = $t;
 
         return $t;
-
     }
 
     public function addRuleContextChild(RuleContext $ruleInvocation)
@@ -304,7 +303,7 @@ class ParserRuleContext extends RuleContext
         }
 
         if ($this->stop === null || $this->stop->getTokenIndex() < $this->start->getTokenIndex()) {
-           return Interval::of($this->start->getTokenIndex(), $this->start->getTokenIndex() - 1); // empty
+            return Interval::of($this->start->getTokenIndex(), $this->start->getTokenIndex() - 1); // empty
         }
 
         return Interval::of($this->start->getTokenIndex(), $this->stop->getTokenIndex());

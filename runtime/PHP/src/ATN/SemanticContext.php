@@ -44,12 +44,12 @@ abstract class SemanticContext extends BaseObject
      * prediction, so we passed in the outer context here in case of context
      * dependent predicate evaluation.</p>
      */
-    public abstract function evaluate(Recognizer $parser, RuleContext $parserCallStack): bool;
+    abstract public function evaluate(Recognizer $parser, RuleContext $parserCallStack): bool;
 
     /**
      * Evaluate the precedence predicates for the context and reduce the result.
      *
-     * @param \ANTLR\v4\Runtime\Recognizer $parser The parser instance.
+     * @param \ANTLR\v4\Runtime\Recognizer $parser the parser instance
      * @param \ANTLR\v4\Runtime\RuleContext $parserCallStack
      *
      * @return \ANTLR\v4\Runtime\ATN\SemanticContext|null The simplified semantic context after precedence predicates are
@@ -65,12 +65,12 @@ abstract class SemanticContext extends BaseObject
      * semantic context after precedence predicates are evaluated.</li>
      * </ul>
      */
-    public function evaluatePrecedence(Recognizer $parser, RuleContext $parserCallStack): ?SemanticContext
+    public function evaluatePrecedence(Recognizer $parser, RuleContext $parserCallStack): ?self
     {
         return $this;
     }
 
-    public static function and(?SemanticContext $a, ?SemanticContext $b): SemanticContext
+    public static function and(?self $a, ?self $b): self
     {
         if ($a === null || $a === self::NONE()) {
             return $b;
@@ -88,7 +88,7 @@ abstract class SemanticContext extends BaseObject
         return $result;
     }
 
-    public static function or(?SemanticContext $a, ?SemanticContext $b): SemanticContext
+    public static function or(?self $a, ?self $b): self
     {
         if ($a === null) {
             return $b;
@@ -123,7 +123,7 @@ abstract class SemanticContext extends BaseObject
         return $result;
     }
 
-    public static function NONE(): SemanticContext
+    public static function NONE(): self
     {
         if (self::$none === null) {
             self::$none = new Predicate();

@@ -19,7 +19,7 @@ final class LexerTypeAction extends BaseObject implements LexerAction
     /**
      * Constructs a new {@code type} action with the specified token type value.
      *
-     * @param int $type The type to assign to the token using {@link Lexer#setType}.
+     * @param int $type the type to assign to the token using {@link Lexer#setType}
      */
     public function __construct(int $type)
     {
@@ -29,7 +29,7 @@ final class LexerTypeAction extends BaseObject implements LexerAction
     /**
      * Gets the type to assign to a token created by the lexer.
      *
-     * @return int The type to assign to a token created by the lexer.
+     * @return int the type to assign to a token created by the lexer
      */
     public function getType(): int
     {
@@ -72,7 +72,7 @@ final class LexerTypeAction extends BaseObject implements LexerAction
             return true;
         }
 
-        if ($o instanceof LexerTypeAction) {
+        if ($o instanceof self) {
             return $o->getType() === $this->getActionType();
         }
 

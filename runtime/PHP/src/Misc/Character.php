@@ -7,7 +7,7 @@ namespace ANTLR\v4\Runtime\Misc;
 final class Character
 {
     /**
-     * The minimum value of a Unicode supplementary code point
+     * The minimum value of a Unicode supplementary code point.
      *
      * @var int
      */

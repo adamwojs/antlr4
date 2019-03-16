@@ -7,7 +7,7 @@ namespace ANTLR\v4\Runtime\ATN\ATNDeserializer;
 interface UnicodeDeserializer
 {
     /**
-     * Wrapper for readInt() or readInt32()
+     * Wrapper for readInt() or readInt32().
      *
      * @param array $data
      * @param int $p
@@ -18,7 +18,7 @@ interface UnicodeDeserializer
 
     /**
      * Work around Java not allowing mutation of captured variables
-     * by returning amount by which to increment p after each read
+     * by returning amount by which to increment p after each read.
      *
      * @return int
      */

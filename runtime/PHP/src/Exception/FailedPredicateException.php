@@ -32,7 +32,7 @@ class FailedPredicateException extends RecognitionException
     public function __construct(Parser $recognizer, ?string $predicate, ?string $message = null)
     {
         if ($message === null) {
-            $message = sprintf("failed predicate: {%s}?", $predicate);
+            $message = sprintf('failed predicate: {%s}?', $predicate);
         }
 
         parent::__construct($recognizer, $recognizer->getInputStream(), $recognizer->getContext(), $message);

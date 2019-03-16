@@ -40,7 +40,7 @@ class DiagnosticErrorListener extends BaseErrorListener
      * whether all ambiguities or only exact ambiguities are reported.
      *
      * @param bool $exactOnly {@code true} to report only exact ambiguities, otherwise
-     * {@code false} to report all ambiguities.
+     * {@code false} to report all ambiguities
      */
     public function __construct(bool $exactOnly = true)
     {
@@ -130,11 +130,11 @@ class DiagnosticErrorListener extends BaseErrorListener
      * parser.
      *
      * @param \ANTLR\v4\Runtime\Misc\BitSet|null reportedAlts The set of conflicting or ambiguous alternatives, as
-     * reported by the parser.
-     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet configs The conflicting or ambiguous configuration set.
+     * reported by the parser
+     * @param \ANTLR\v4\Runtime\ATN\ATNConfigSet configs The conflicting or ambiguous configuration set
      *
-     * @return \ANTLR\v4\Runtime\Misc\BitSet Returns {@code reportedAlts} if it is not {@code null}, otherwise
-     * returns the set of alternatives represented in {@code configs}.
+     * @return \ANTLR\v4\Runtime\Misc\BitSet returns {@code reportedAlts} if it is not {@code null}, otherwise
+     * returns the set of alternatives represented in {@code configs}
      */
     protected function getConflictingAlts(?BitSet $reportedAlts, ATNConfigSet $configs): BitSet
     {
@@ -147,8 +147,6 @@ class DiagnosticErrorListener extends BaseErrorListener
             $result->set($config->alt);
         }
 
-        returN $result;
+        return $result;
     }
 }
-
-

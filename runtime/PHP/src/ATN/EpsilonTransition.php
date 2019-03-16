@@ -22,7 +22,7 @@ final class EpsilonTransition extends Transition
 
     /**
      * @return int the rule index of a precedence rule for which this transition is
-     * returning from, where the precedence value is 0; otherwise, -1.
+     * returning from, where the precedence value is 0; otherwise, -1
      *
      * @see ATNConfig#isPrecedenceFilterSuppressed()
      * @see ParserATNSimulator#applyPrecedenceFilter(ATNConfigSet)
@@ -59,6 +59,6 @@ final class EpsilonTransition extends Transition
 
     public function __toString(): string
     {
-        return "epsilon";
+        return 'epsilon';
     }
 }

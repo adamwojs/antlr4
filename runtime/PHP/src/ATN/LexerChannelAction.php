@@ -19,7 +19,7 @@ final class LexerChannelAction extends BaseObject implements LexerAction
     /**
      * Constructs a new {@code channel} action with the specified channel value.
      *
-     * @param int $channel The channel value to pass to {@link Lexer#setChannel}.
+     * @param int $channel the channel value to pass to {@link Lexer#setChannel}
      */
     public function __construct(int $channel)
     {
@@ -29,7 +29,7 @@ final class LexerChannelAction extends BaseObject implements LexerAction
     /**
      * Gets the channel to use for the {@link Token} created by the lexer.
      *
-     * @return int The channel to use for the {@link Token} created by the lexer.
+     * @return int the channel to use for the {@link Token} created by the lexer
      */
     public function getChannel(): int
     {
@@ -69,7 +69,7 @@ final class LexerChannelAction extends BaseObject implements LexerAction
             return true;
         }
 
-        if ($o instanceof LexerChannelAction) {
+        if ($o instanceof self) {
             return $this->channel === $o->channel;
         }
 

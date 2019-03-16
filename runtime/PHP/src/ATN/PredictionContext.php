@@ -24,7 +24,7 @@ abstract class PredictionContext extends BaseObject
     public $id;
 
     /**
-     * Stores the computed hash code of this {@link PredictionContext}
+     * Stores the computed hash code of this {@link PredictionContext}.
      *
      * @var int
      */
@@ -42,7 +42,7 @@ abstract class PredictionContext extends BaseObject
         $this->cachedHashCode = $cachedHashCode;
     }
 
-    public abstract function getParent(int $index): ?self;
+    abstract public function getParent(int $index): ?self;
 
     /**
      * This means only the {@link #EMPTY} (wildcard? not sure) context is in set.
@@ -70,9 +70,9 @@ abstract class PredictionContext extends BaseObject
         return $this->getReturnState($this->size() - 1) === self::EMPTY_RETURN_STATE;
     }
 
-    public abstract function getReturnState(int $index): int;
+    abstract public function getReturnState(int $index): int;
 
-    public abstract function size(): int;
+    abstract public function size(): int;
 
     /**
      * {@inheritdoc}
@@ -95,7 +95,7 @@ abstract class PredictionContext extends BaseObject
         }
 
         // If we have a parent, convert it to a PredictionContext graph
-        $parent = PredictionContext::fromRuleContext($atn, $outerContext->parent);
+        $parent = self::fromRuleContext($atn, $outerContext->parent);
         /** @var \ANTLR\v4\Runtime\ATN\RuleTransition $transition */
         $transition = $atn->states[$outerContext->invokingState]->transition(0);
 
@@ -103,12 +103,11 @@ abstract class PredictionContext extends BaseObject
     }
 
     public static function merge(
-        PredictionContext $a,
-        PredictionContext $b,
+        self $a,
+        self $b,
         bool $rootIsWildcard,
         array $mergeCache
-    ): PredictionContext
-    {
+    ): self {
         // must be empty context, never null
         assert($a !== null && $b !== null);
 
@@ -179,8 +178,7 @@ abstract class PredictionContext extends BaseObject
         SingletonPredictionContext $b,
         bool $rootIsWildcard,
         array $mergeCache
-    ): PredictionContext
-    {
+    ): self {
         $rootMerge = self::mergeRoot($a, $b, $rootIsWildcard);
         if ($rootMerge !== null) {
             return $rootMerge;
@@ -204,9 +202,9 @@ abstract class PredictionContext extends BaseObject
             // of those graphs.  dup a, a' points at merged array
             // new joined parent so create new singleton pointing to it, a'
             $a_ = SingletonPredictionContext::create($parent, $a->returnState);
+
             return $a_;
-        }
-        else {
+        } else {
             // a != b payloads differ
             // see if we can collapse parents due to $+x parents if local ctx
             $singleParent = null;
@@ -227,6 +225,7 @@ abstract class PredictionContext extends BaseObject
                 $parents = [$singleParent, $singleParent];
 
                 $a_ = new ArrayPredictionContext($parents, $payloads);
+
                 return $a_;
             }
 
@@ -234,13 +233,14 @@ abstract class PredictionContext extends BaseObject
             // into array; can't merge.
             // ax + by = [ax,by]
             $payloads = [$a->returnState, $b->returnState];
-            $parents  = [$a->parent, $b->parent];
+            $parents = [$a->parent, $b->parent];
             if ($a->returnState > $b->returnState) {
                 $payloads = array_reverse($payloads);
-                $parents  = array_reverse($parents);
+                $parents = array_reverse($parents);
             }
 
             $a_ = new ArrayPredictionContext($parents, $payloads);
+
             return $a_;
         }
     }
@@ -289,7 +289,7 @@ abstract class PredictionContext extends BaseObject
         SingletonPredictionContext $a,
         SingletonPredictionContext $b,
         bool $rootIsWildcard
-    ): ?PredictionContext {
+    ): ?self {
         $EMPTY = self::createEmpty();
 
         if ($rootIsWildcard) {
@@ -346,7 +346,7 @@ abstract class PredictionContext extends BaseObject
         ArrayPredictionContext $b,
         bool $rootIsWildcard,
         array $mergeCache
-    ): PredictionContext {
+    ): self {
         if ($mergeCache !== null) {
             // TODO: Missing cache implementation
         }
@@ -382,7 +382,7 @@ abstract class PredictionContext extends BaseObject
 
                 $i++; // hop over left one as usual
                 $j++; // but also skip one in right side since we merge
-            } else if ($a->returnStates[$i] < $b->returnStates[$j]) {
+            } elseif ($a->returnStates[$i] < $b->returnStates[$j]) {
                 //copy $a[i] to M
                 $mergedParents[$k] = $a_parent;
                 $mergedReturnStates[$k] = $a->returnStates[$i];
@@ -470,16 +470,17 @@ abstract class PredictionContext extends BaseObject
     }
 
     public static function getCachedContext(
-        PredictionContext $context,
+        self $context,
         PredictionContextCache $cache,
         IdentityHashMap $visited
-    ): PredictionContext {
+    ): self {
         if ($context->isEmpty()) {
             return $context;
         }
 
         if (($existing = $cache->get($context)) !== null) {
             $visited->put($context, $existing);
+
             return $existing;
         }
 
@@ -504,24 +505,24 @@ abstract class PredictionContext extends BaseObject
         if (!$changed) {
             $cache->add($context);
             $visited->put($context, $context);
+
             return $context;
         }
 
         $updated = null;
-        switch(count($parents)) {
+        switch (count($parents)) {
             case 0:
                 $updated = self::createEmpty();
                 break;
             case 1:
                 $updated = SingletonPredictionContext::create($parents[0], $context->getReturnState(0));
                 break;
-            default: {
+            default:
                 if (!($context instanceof ArrayPredictionContext)) {
                     throw new \RuntimeException('Expected that $context is instance of ArrayPredictionContext');
                 }
 
                 $updated = new ArrayPredictionContext($parents, $context->returnStates);
-            }
         }
 
         $cache->add($updated);

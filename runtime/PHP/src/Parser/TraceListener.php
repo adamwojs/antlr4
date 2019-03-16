@@ -36,7 +36,7 @@ class TraceListener implements ParseTreeListener
      */
     public function visitErrorNode(ErrorNode $node): void
     {
-        return ;
+        return;
     }
 
     /**

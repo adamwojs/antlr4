@@ -26,13 +26,13 @@ class AndOperator extends Operator
     public function __construct(SemanticContext $a, SemanticContext $b)
     {
         $operands = new Set();
-        if ($a instanceof AndOperator) {
+        if ($a instanceof self) {
             $operands->add(...$a->opnds);
         } else {
             $operands->add($a);
         }
 
-        if ($b instanceof AndOperator) {
+        if ($b instanceof self) {
             $operands->add(...$b->opnds);
         } else {
             $operands->add($b);
@@ -87,7 +87,7 @@ class AndOperator extends Operator
             if ($evaluated === null) {
                 // The AND context is false if any element is false
                 return null;
-            } else if ($evaluated !== SemanticContext::NONE()) {
+            } elseif ($evaluated !== SemanticContext::NONE()) {
                 // Reduce the result by skipping true elements
                 $operands[] = $evaluated;
             }
@@ -119,7 +119,7 @@ class AndOperator extends Operator
             return true;
         }
 
-        if ($o instanceof AndOperator) {
+        if ($o instanceof self) {
             return $this->opnds === $o->opnds;
         }
 

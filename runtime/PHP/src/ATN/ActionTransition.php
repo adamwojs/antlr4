@@ -13,7 +13,7 @@ final class ActionTransition extends Transition
     public $actionIndex;
 
     /**
-     * e.g., $i ref in action
+     * e.g., $i ref in action.
      *
      * @var bool
      */

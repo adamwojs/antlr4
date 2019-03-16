@@ -6,5 +6,4 @@ namespace ANTLR\v4\Runtime\Exception;
 
 class NullPointerException extends \RuntimeException
 {
-
 }

@@ -32,6 +32,6 @@ final class WildcardTransition extends Transition
 
     public function __toString(): string
     {
-        return ".";
+        return '.';
     }
 }

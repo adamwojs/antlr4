@@ -16,7 +16,7 @@ abstract class Operator extends SemanticContext
      * Gets the operands for the semantic context operator.
      *
      * @return array a collection of {@link SemanticContext} operands for the
-     * operator.
+     * operator
      */
-    public abstract function getOperands(): array;
+    abstract public function getOperands(): array;
 }

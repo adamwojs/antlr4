@@ -59,25 +59,25 @@ class ATNDeserializationOptions extends BaseObject
     private function throwIfReadOnly(): void
     {
         if ($this->isReadOnly()) {
-            throw new IllegalStateException("The object is read only.");
+            throw new IllegalStateException('The object is read only.');
         }
     }
 
-    public static function getDefaultOptions(): ATNDeserializationOptions
+    public static function getDefaultOptions(): self
     {
         static $defaultOptions = null;
 
         if ($defaultOptions === null) {
-            $defaultOptions = new ATNDeserializationOptions();
+            $defaultOptions = new self();
             $defaultOptions->makeReadOnly();
         }
 
         return $defaultOptions;
     }
 
-    public static function copy(ATNDeserializationOptions $options): ATNDeserializationOptions
+    public static function copy(self $options): self
     {
-        $copy = new ATNDeserializationOptions();
+        $copy = new self();
         $copy->setVerifyATN($options->isVerifyATN());
         $copy->setGenerateRuleBypassTransitions($options->isGenerateRuleBypassTransitions());
 

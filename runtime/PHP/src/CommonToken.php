@@ -6,7 +6,6 @@ namespace ANTLR\v4\Runtime;
 
 use ANTLR\v4\Runtime\Misc\Interval;
 use ANTLR\v4\Runtime\Misc\Pair;
-use IntlChar;
 
 class CommonToken extends BaseObject implements WritableToken
 {
@@ -92,8 +91,8 @@ class CommonToken extends BaseObject implements WritableToken
      * Constructs a new {@link CommonToken} with the specified token type (optional),
      * text (optional) and source.
      *
-     * @param int $type The token type.
-     * @param string|null $text The text of the token.
+     * @param int $type the token type
+     * @param string|null $text the text of the token
      * @param \ANTLR\v4\Runtime\Misc\Pair|null $source
      */
     public function __construct(int $type = Token::INVALID_TYPE, ?string $text = null, Pair $source = null)
@@ -134,7 +133,7 @@ class CommonToken extends BaseObject implements WritableToken
             if ($this->start < $n && $this->stop < $n) {
                 return $input->getText(Interval::of($this->start, $this->stop));
             } else {
-                return "<EOF>";
+                return '<EOF>';
             }
         }
 
@@ -146,9 +145,9 @@ class CommonToken extends BaseObject implements WritableToken
      * {@code null}, then {@link #getText} will return this value rather than
      * extracting the text from the input.
      *
-     * @param string|null $text The explicit text of the token, or {@code null} if the text
+     * @param string|null $text the explicit text of the token, or {@code null} if the text
      * should be obtained from the input along with the start and stop indexes
-     * of the token.
+     * of the token
      */
     public function setText(?string $text): void
     {
@@ -269,9 +268,9 @@ class CommonToken extends BaseObject implements WritableToken
         }
 
         $text = strtr($this->getText() ?? '<no text>', [
-            "\n" => "\\n",
-            "\r" => "\\r",
-            "\t" => "\\t"
+            "\n" => '\\n',
+            "\r" => '\\r',
+            "\t" => '\\t',
         ]);
 
         $type = (string)$this->type;
@@ -287,7 +286,7 @@ class CommonToken extends BaseObject implements WritableToken
             $type,
             $channel,
             $this->getLine(),
-            $this->getCharPositionInLine()
+            $this->getCharPositionInLine(),
         ]);
     }
 
@@ -307,13 +306,13 @@ class CommonToken extends BaseObject implements WritableToken
      * will be constructed from the result of {@link Token#getTokenSource} and
      * {@link Token#getInputStream}.</p>
      *
-     * @param \ANTLR\v4\Runtime\Token $source The token to copy.
+     * @param \ANTLR\v4\Runtime\Token $source the token to copy
      *
      * @return \ANTLR\v4\Runtime\CommonToken
      */
-    public static function copy(Token $source): CommonToken
+    public static function copy(Token $source): self
     {
-        $token = new CommonToken();
+        $token = new self();
         $token->type = $source->getType();
         $token->line = $source->getLine();
         $token->index = $source->getTokenIndex();
@@ -322,7 +321,7 @@ class CommonToken extends BaseObject implements WritableToken
         $token->start = $source->getStartIndex();
         $token->stop = $source->getStopIndex();
 
-        if ($source instanceof CommonToken) {
+        if ($source instanceof self) {
             $token->text = $source->text;
             $token->source = $source->source;
         } else {

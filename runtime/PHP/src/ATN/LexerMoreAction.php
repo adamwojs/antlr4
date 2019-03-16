@@ -61,11 +61,10 @@ final class LexerMoreAction extends BaseObject implements LexerAction
         return $this === $o;
     }
 
-
-    public static function getInstance(): LexerMoreAction
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new LexerMoreAction();
+            self::$instance = new self();
         }
 
         return self::$instance;

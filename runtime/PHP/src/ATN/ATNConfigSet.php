@@ -10,7 +10,6 @@ use ANTLR\v4\Runtime\Exception\IllegalStateException;
 use ANTLR\v4\Runtime\Exception\UnsupportedOperationException;
 use ANTLR\v4\Runtime\Misc\BitSet;
 use ArrayIterator;
-use Traversable;
 
 /**
  * Specialized {@link Set}{@code <}{@link ATNConfig}{@code >} that can track
@@ -28,7 +27,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public $configLookup;
 
     /**
-     * Track the elements as they are added to the set; supports get(i)
+     * Track the elements as they are added to the set; supports get(i).
      *
      * @var \ANTLR\v4\Runtime\ATN\ATNConfig[]
      */
@@ -97,7 +96,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public function add(ATNConfig $config, $mergeCache = null): bool
     {
         if ($this->readonly) {
-            throw new IllegalStateException("This set is readonly");
+            throw new IllegalStateException('This set is readonly');
         }
 
         if ($config->semanticContext !== SemanticContext::NONE()) {
@@ -151,7 +150,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     }
 
     /**
-     * Return a List holding list of configs
+     * Return a List holding list of configs.
      *
      * @return \ANTLR\v4\Runtime\ATN\ATNConfig
      */
@@ -162,13 +161,13 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
 
     public function getStates(): array
     {
-        return array_map(function(ATNConfig $config) {
+        return array_map(function (ATNConfig $config) {
             return $config->state;
         }, $this->configs);
     }
 
     /**
-     * Return a List holding list of configs
+     * Return a List holding list of configs.
      *
      * @return \ANTLR\v4\Runtime\ATN\ATNConfig[]
      */
@@ -215,11 +214,11 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public function optimizeConfigs(ATNSimulator $interpreter): void
     {
         if ($this->readonly) {
-            throw new IllegalStateException("This set is readonly");
+            throw new IllegalStateException('This set is readonly');
         }
 
         if ($this->configLookup->isEmpty()) {
-            return ;
+            return;
         }
 
         foreach ($this->configs as $config) {
@@ -240,7 +239,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public function contains($o): bool
     {
         if ($this->configLookup === null) {
-            throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
+            throw new UnsupportedOperationException('This method is not implemented for readonly sets.');
         }
 
         return $this->configLookup->contains($o);
@@ -254,7 +253,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public function clear(): void
     {
         if ($this->readonly) {
-            throw new IllegalStateException("This set is readonly");
+            throw new IllegalStateException('This set is readonly');
         }
 
         $this->configs = [];
@@ -291,7 +290,7 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
             return true;
         }
 
-        if ($o instanceof ATNConfigSet) {
+        if ($o instanceof self) {
             if (count($this->configs) !== count($o->configs)) {
                 return false;
             }
@@ -341,12 +340,12 @@ class ATNConfigSet extends BaseObject implements \IteratorAggregate
     public function __toString(): string
     {
         // TODO: Missing \ANTLR\v4\Runtime\ATN\ATNConfigSet::__toString implementation
-        return "";
+        return '';
     }
 
-    public static function copy(ATNConfigSet $old): ATNConfigSet
+    public static function copy(self $old): self
     {
-        $configSet = new ATNConfigSet($old->fullCtx);
+        $configSet = new self($old->fullCtx);
         $configSet->addAll(new ArrayIterator($old->configs));
         $configSet->uniqueAlt = $old->uniqueAlt;
         $configSet->conflictingAlts = $old->conflictingAlts;

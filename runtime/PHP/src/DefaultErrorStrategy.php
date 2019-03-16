@@ -125,9 +125,9 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
         $this->beginErrorCondition($recognizer);
         if ($e instanceof NoViableAltException) {
             $this->reportNoViableAlternative($recognizer, $e);
-        } else if ($e instanceof InputMismatchException) {
+        } elseif ($e instanceof InputMismatchException) {
             $this->reportInputMismatch($recognizer, $e);
-        } else if ($e instanceof FailedPredicateException) {
+        } elseif ($e instanceof FailedPredicateException) {
             $this->reportFailedPredicate($recognizer, $e);
         } else {
             trigger_error('Unknown recognition error type: ' . get_class($e));
@@ -228,6 +228,7 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
             // We are sure the token matches
             $this->nextTokensContext = null;
             $this->nextTokensState = ATN::INVALID_ALT_NUMBER;
+
             return;
         }
 
@@ -538,6 +539,7 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
 
         if ($expectingAtLL2->contains($currentSymbolType)) {
             $this->reportMissingToken($recognizer);
+
             return true;
         }
 
@@ -578,6 +580,7 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
             // we want to return the token we're actually matching
             $matchedSymbol = $recognizer->getCurrentToken();
             $this->reportMatch($recognizer);
+
             return $matchedSymbol;
         }
 
@@ -619,8 +622,7 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
 
         if ($expecting === Token::EOF) {
             $tokenText = '<missing EOF>';
-        }
-        else {
+        } else {
             $tokenText = '<missing ' . $recognizer->getVocabulary()->getDisplayName($expectedTokenType) . '>';
         }
 
@@ -670,8 +672,7 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
         if ($s === null) {
             if ($this->getSymbolType($t) === Token::EOF) {
                 $s = '<EOF>';
-            }
-            else {
+            } else {
                 $s = "<{$this->getSymbolType($t)}>";
             }
         }
@@ -692,9 +693,9 @@ class DefaultErrorStrategy implements ANTLRErrorStrategy
     protected function escapeWSAndQuote(string $s): string
     {
         $s = strtr($s, [
-            "\n" => "\\n",
-            "\r" => "\\r",
-            "\t" => "\\t",
+            "\n" => '\\n',
+            "\r" => '\\r',
+            "\t" => '\\t',
         ]);
 
         return "'$s'";

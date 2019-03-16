@@ -51,7 +51,7 @@ class RecognitionException extends RuntimeException
         ?Recognizer $recognizer,
         IntStream $input,
         ?ParserRuleContext $ctx,
-        string $message = "",
+        string $message = '',
         int $code = 0,
         Throwable $previous = null
     ) {
@@ -94,8 +94,8 @@ class RecognitionException extends RuntimeException
      * <p>If the set of expected tokens is not known and could not be computed,
      * this method returns {@code null}.</p>
      *
-     * @return \ANTLR\v4\Runtime\Misc\IntervalSet The set of token types that could potentially follow the current
-     * state in the ATN, or {@code null} if the information is not available.
+     * @return \ANTLR\v4\Runtime\Misc\IntervalSet the set of token types that could potentially follow the current
+     * state in the ATN, or {@code null} if the information is not available
      */
     public function getExpectedTokens(): IntervalSet
     {
@@ -125,9 +125,9 @@ class RecognitionException extends RuntimeException
      *
      * <p>If the input stream is not available, this method returns {@code null}.</p>
      *
-     * @return \ANTLR\v4\Runtime\IntStream The input stream which is the symbol source for the recognizer
+     * @return \ANTLR\v4\Runtime\IntStream the input stream which is the symbol source for the recognizer
      * where this exception was thrown, or {@code null} if the stream is not
-     * available.
+     * available
      */
     public function getInputStream(): IntStream
     {
@@ -139,20 +139,20 @@ class RecognitionException extends RuntimeException
      *
      * <p>If the recognizer is not available, this method returns {@code null}.</p>
      *
-     * @return \ANTLR\v4\Runtime\Recognizer The recognizer where this exception occurred, or {@code null} if
-     * the recognizer is not available.
+     * @return \ANTLR\v4\Runtime\Recognizer the recognizer where this exception occurred, or {@code null} if
+     * the recognizer is not available
      */
     public function getRecognizer(): Recognizer
     {
         return $this->recognizer;
     }
 
-    protected final function setOffendingState(int $offendingState): void
+    final protected function setOffendingState(int $offendingState): void
     {
         $this->offendingState = $offendingState;
     }
 
-    protected final function setOffendingToken(Token $offendingToken): void
+    final protected function setOffendingToken(Token $offendingToken): void
     {
         $this->offendingToken = $offendingToken;
     }

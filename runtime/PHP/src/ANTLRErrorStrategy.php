@@ -9,7 +9,7 @@ use ANTLR\v4\Runtime\Exception\RecognitionException;
 /**
  * The interface for defining strategies to deal with syntax errors encountered
  * during a parse by ANTLR-generated parsers. We distinguish between three
- * different kinds of errors:
+ * different kinds of errors:.
  *
  * <ul>
  * <li>The parser could not figure out which path to take in the ATN (none of

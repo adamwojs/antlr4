@@ -32,7 +32,7 @@ interface IntSet
      *
      * @throws \ANTLR\v4\Runtime\Exception\IllegalStateException  if the current set is read-only
      */
-    public function addAll(?IntSet $set): IntSet;
+    public function addAll(?self $set): self;
 
     /**
      * Return a new {@link IntSet} object containing all elements that are
@@ -45,7 +45,7 @@ interface IntSet
      * current set and {@code a}. The value {@code null} may be returned in
      * place of an empty result set.
      */
-    public function and(IntSet $set): IntSet;
+    public function and(self $set): self;
 
     /**
      * Return a new {@link IntSet} object containing all elements that are
@@ -65,8 +65,7 @@ interface IntSet
      * {@code elements} but not present in the current set. The value
      * {@code null} may be returned in place of an empty result set.
      */
-
-    public function complement(IntSet $set): IntSet;
+    public function complement(self $set): self;
 
     /**
      * Return a new {@link IntSet} object containing all elements that are
@@ -83,7 +82,7 @@ interface IntSet
      * set and {@code a}. The value {@code null} may be returned in place of an
      * empty result set.
      */
-    public function or(IntSet $set): IntSet;
+    public function or(self $set): self;
 
     /**
      * Return a new {@link IntSet} object containing all elements that are
@@ -103,13 +102,13 @@ interface IntSet
      * {@code elements} but not present in the current set. The value
      * {@code null} may be returned in place of an empty result set.
      */
-    public function substract(IntSet $set): IntSet;
+    public function substract(self $set): self;
 
     /**
      * Return the total number of elements represented by the current set.
      *
      * @return int the total number of elements represented by the current set,
-     * regardless of the manner in which the elements are stored.
+     * regardless of the manner in which the elements are stored
      */
     public function size(): int;
 
@@ -127,9 +126,9 @@ interface IntSet
     /**
      * Returns {@code true} if the set contains the specified element.
      *
-     * @param int $el The element to check for.
+     * @param int $el the element to check for
      *
-     * @return {@code true} if the set contains {@code el}; otherwise {@code false}.
+     * @return {@code true} if the set contains {@code el}; otherwise {@code false}
      */
     public function contains(int $el): bool;
 
@@ -147,8 +146,8 @@ interface IntSet
      * Return a list containing the elements represented by the current set. The
      * list is returned in ascending numerical order.
      *
-     * @return int[] A list containing all element present in the current set, sorted
-     * in ascending numerical order.
+     * @return int[] a list containing all element present in the current set, sorted
+     * in ascending numerical order
      */
     public function toList(): array;
 

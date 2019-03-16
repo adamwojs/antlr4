@@ -32,11 +32,11 @@ interface IntStream
      * The value returned by {@link #getSourceName} when the actual name of the
      * underlying source is not known.
      */
-    public const UNKNOWN_SOURCE_NAME = "<unknown>";
+    public const UNKNOWN_SOURCE_NAME = '<unknown>';
 
     /**
      * Consumes the current symbol in the stream. This method has the following
-     * effects:
+     * effects:.
      *
      * <ul>
      *   <li><strong>Forward movement:</strong> The value of {@link #index index()}
@@ -141,9 +141,9 @@ interface IntStream
      * }
      * </pre>
      *
-     * @return int An opaque marker which should be passed to
+     * @return int an opaque marker which should be passed to
      *
-     * {@link #release release()} when the marked range is no longer required.
+     * {@link #release release()} when the marked range is no longer required
      */
     public function mark(): int;
 
@@ -156,7 +156,8 @@ interface IntStream
      *
      * <p>For more information and an example, see {@link #mark}.</p>
      *
-     * @param int marker A marker returned by a call to {@code mark()}.
+     * @param int marker A marker returned by a call to {@code mark()}
+     *
      * @see #mark
      */
     public function release(int $marker): void;
@@ -195,7 +196,7 @@ interface IntStream
      * an {@link IntStream initializing method} has occurred after this stream
      * was constructed.
      *
-     * @param int $index The absolute index to seek to.
+     * @param int $index the absolute index to seek to
      *
      * @throws \ANTLR\v4\Runtime\Exception\IllegalArgumentException if {@code index} is less than 0
      * @throws \ANTLR\v4\Runtime\Exception\UnsupportedOperationException if the stream does not support
@@ -208,7 +209,7 @@ interface IntStream
      * symbol.
      *
      * @throws \ANTLR\v4\Runtime\Exception\UnsupportedOperationException if the size of the stream is
-     * unknown.
+     * unknown
      *
      * @return int
      */

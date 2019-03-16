@@ -9,7 +9,7 @@ use ANTLR\v4\Runtime\BaseObject;
 use Ds\Map;
 
 /**
- * Replaces DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>
+ * Replaces DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>.
  */
 final class MergeCache extends BaseObject
 {

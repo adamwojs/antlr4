@@ -12,12 +12,14 @@ class ParseTreeWalker extends BaseObject
     {
         if ($tree instanceof ErrorNode) {
             $listener->visitErrorNode($tree);
-            return ;
+
+            return;
         }
 
         if ($tree instanceof TerminalNode) {
             $listener->visitTerminal($tree);
-            return ;
+
+            return;
         }
 
         $this->enterRule($listener, $tree);
@@ -50,12 +52,12 @@ class ParseTreeWalker extends BaseObject
         $listener->exitEveryRule($ctx);
     }
 
-    public static function getDefault(): ParseTreeWalker
+    public static function getDefault(): self
     {
         static $instance = null;
 
         if ($instance === null) {
-            $instance = new ParseTreeWalker();
+            $instance = new self();
         }
 
         return $instance;

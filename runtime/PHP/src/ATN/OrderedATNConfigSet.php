@@ -13,7 +13,7 @@ class OrderedATNConfigSet extends ATNConfigSet
     {
         parent::__construct($fullCtx);
 
-        $this->configLookup = new class extends AbstractConfigHashSet {
+        $this->configLookup = new class() extends AbstractConfigHashSet {
             public function __construct()
             {
                 parent::__construct(ObjectEqualityComparator::getInstance());

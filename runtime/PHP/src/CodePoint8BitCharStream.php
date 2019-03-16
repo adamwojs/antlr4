@@ -52,7 +52,7 @@ final class CodePoint8BitCharStream extends CodePointCharStream
             case 0:
                 // Undefined
                 return 0;
-            case 1;
+            case 1:
                 $offset = $this->position + $i - 1;
                 if ($offset >= $this->size) {
                     return self::EOF;
@@ -61,6 +61,6 @@ final class CodePoint8BitCharStream extends CodePointCharStream
                 return $this->data[$offset] & 0xFF;
         }
 
-        throw new UnsupportedOperationException("Non reachable");
+        throw new UnsupportedOperationException('Non reachable');
     }
 }

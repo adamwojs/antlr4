@@ -29,8 +29,8 @@ final class LexerCustomAction extends BaseObject implements LexerAction
      * Constructs a custom lexer action with the specified rule and action
      * indexes.
      *
-     * @param int $ruleIndex The rule index to use for calls to {@link Recognizer#action}.
-     * @param int $actionIndex The action index to use for calls to {@link Recognizer#action}.
+     * @param int $ruleIndex the rule index to use for calls to {@link Recognizer#action}
+     * @param int $actionIndex the action index to use for calls to {@link Recognizer#action}
      */
     public function __construct(int $ruleIndex, int $actionIndex)
     {
@@ -41,7 +41,7 @@ final class LexerCustomAction extends BaseObject implements LexerAction
     /**
      * Gets the rule index to use for calls to {@link Recognizer#action}.
      *
-     * @return int The rule index for the custom action.
+     * @return int the rule index for the custom action
      */
     public function getRuleIndex(): int
     {
@@ -51,7 +51,7 @@ final class LexerCustomAction extends BaseObject implements LexerAction
     /**
      * Gets the action index to use for calls to {@link Recognizer#action}.
      *
-     * @return int The action index for the custom action.
+     * @return int the action index for the custom action
      */
     public function getActionIndex(): int
     {
@@ -98,7 +98,7 @@ final class LexerCustomAction extends BaseObject implements LexerAction
             return true;
         }
 
-        if ($o instanceof LexerCustomAction) {
+        if ($o instanceof self) {
             return $o->getRuleIndex() === $this->getRuleIndex()
                 && $o->getActionIndex() === $this->getActionIndex();
         }

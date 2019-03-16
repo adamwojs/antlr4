@@ -7,7 +7,6 @@ namespace ANTLR\v4\Runtime\ATN\ATNConfigSet;
 use ANTLR\v4\Runtime\ATN\ATNConfig;
 use ANTLR\v4\Runtime\BaseObject;
 use ANTLR\v4\Runtime\EqualityComparator;
-use Ds\Set;
 
 abstract class AbstractConfigHashSet extends BaseObject
 {
