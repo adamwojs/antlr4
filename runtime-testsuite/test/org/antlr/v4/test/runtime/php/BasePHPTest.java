@@ -46,7 +46,12 @@ public class BasePHPTest implements RuntimeTestSupport {
 	 */
 	protected StringBuilder antlrToolErrors;
 
-	protected STGroup templates = new STGroupFile(BasePHPTest.class.getResource("PHPTest.stg"));
+	/**
+	 * Templates of the files which are generated during test execution.
+	 */
+	protected STGroup filesTemplates = new STGroupFile(
+		BasePHPTest.class.getResource("PHPTestFiles.stg")
+	);
 
 	@Override
 	public void testSetUp() throws Exception {
@@ -171,7 +176,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 	}
 
 	protected boolean generateComposer() {
-		String output = templates
+		String output = filesTemplates
 			.getInstanceOf("ComposerFile")
 			.add("runtimePath", "file:///home/awojs/Projekty/antlr4/runtime/PHP")
 			.render();
@@ -261,7 +266,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 	}
 
 	protected void writeLexerTestFile(String lexerName, boolean showDFA) throws RuntimeException {
-		String output = templates
+		String output = filesTemplates
 			.getInstanceOf("LexerTestFile")
 			.add("lexerName", lexerName)
 			.add("showDFA", showDFA)
@@ -279,7 +284,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 		boolean debug,
 		boolean trace
 	) {
-		String output = templates
+		String output = filesTemplates
 			.getInstanceOf("ParserTestFile")
 			.add("parserName", parserName)
 			.add("lexerName", lexerName)
