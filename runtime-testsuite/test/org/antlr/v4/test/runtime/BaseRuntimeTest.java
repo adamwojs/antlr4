@@ -105,7 +105,7 @@ public abstract class BaseRuntimeTest {
 		@Override
 		protected void succeeded(Description description) {
 			// remove tmpdir if no error.
-			//delegate.eraseTempDir();
+			delegate.eraseTempDir();
 		}
 	};
 

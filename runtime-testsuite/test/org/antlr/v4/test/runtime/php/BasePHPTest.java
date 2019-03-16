@@ -14,6 +14,9 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static org.antlr.v4.test.runtime.BaseRuntimeTest.antlrOnString;
@@ -22,7 +25,15 @@ import static org.junit.Assert.assertTrue;
 
 public class BasePHPTest implements RuntimeTestSupport {
 
-	private String tmpdir = null;
+	/**
+	 * Work directory for currently executed test
+	 */
+	private String testdir = null;
+
+	/**
+	 * Working directory for runtime tests
+	 */
+	private String basedir = null;
 
 	/**
 	 * If error during parser execution, store stderr here; can't return stdout
@@ -42,10 +53,21 @@ public class BasePHPTest implements RuntimeTestSupport {
 		// new output dir for each test
 		String prop = System.getProperty("antlr-php-test-dir");
 		if (prop != null && prop.length() > 0) {
-			tmpdir = prop;
+			basedir = prop;
 		} else {
-			tmpdir = new File(System.getProperty("java.io.tmpdir") + "/antlr/", getClass().getSimpleName() +
-				"-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis()).getAbsolutePath();
+			basedir = new File(System.getProperty("java.io.tmpdir"),  "/antlr").getAbsolutePath();
+		}
+
+		testdir = new File(basedir, getClass().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis()).getAbsolutePath();
+
+		Files.createDirectories(Paths.get(testdir));
+
+		Path composerPath = Paths.get(basedir +  "/composer.json");
+		if (Files.notExists(composerPath)) {
+			boolean success = generateComposer();
+			assertTrue(success);
+			success = installDependencies();
+			assertTrue(success);
 		}
 
 		antlrToolErrors = new StringBuilder();
@@ -58,12 +80,11 @@ public class BasePHPTest implements RuntimeTestSupport {
 
 	@Override
 	public void eraseTempDir() {
-
 	}
 
 	@Override
 	public String getTmpDir() {
-		return tmpdir;
+		return testdir;
 	}
 
 	@Override
@@ -100,12 +121,8 @@ public class BasePHPTest implements RuntimeTestSupport {
 		);
 
 		assertTrue(success);
-		success = generateComposer();
-		assertTrue(success);
-		success = installDependencies();
-		assertTrue(success);
 
-		writeFile(tmpdir, "input", input);
+		writeFile(testdir, "input", input);
 		writeLexerTestFile(lexerName, showDFA);
 
 		return execModule("Test.php");
@@ -131,12 +148,8 @@ public class BasePHPTest implements RuntimeTestSupport {
 		);
 
 		assertTrue(success);
-		success = generateComposer();
-		assertTrue(success);
-		success = installDependencies();
-		assertTrue(success);
 
-		writeFile(tmpdir, "input", input);
+		writeFile(testdir, "input", input);
 
 		this.stderrDuringParse = null;
 
@@ -163,14 +176,14 @@ public class BasePHPTest implements RuntimeTestSupport {
 			.add("runtimePath", "file:///home/awojs/Projekty/antlr4/runtime/PHP")
 			.render();
 
-		writeFile(tmpdir, "composer.json", output);
+		writeFile(basedir, "composer.json", output);
 
 		return true;
 	}
 
 	protected boolean installDependencies() {
 		final String composerPath = "/usr/bin/composer";
-		File tmpdirFile = new File(tmpdir);
+		File tmpdirFile = new File(basedir);
 
 		try {
 			Process process = (new ProcessBuilder(composerPath, "install"))
@@ -194,7 +207,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 		String... extraOptions
 	) {
 		ErrorQueue equeue =
-			antlrOnString(getTmpDir(), "PHP", grammarFileName, grammarStr, defaultListener, extraOptions);
+			antlrOnString(testdir, "PHP", grammarFileName, grammarStr, defaultListener, extraOptions);
 		if (!equeue.errors.isEmpty()) {
 			return false;
 		}
@@ -220,7 +233,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 	private String execModule(String fileName) {
 		final String phpPath = "/usr/bin/php7.2";
 
-		File tmpdirFile = new File(tmpdir);
+		File tmpdirFile = new File(testdir);
 		String modulePath = new File(tmpdirFile, fileName).getAbsolutePath();
 		String inputPath = new File(tmpdirFile, "input").getAbsolutePath();
 
@@ -254,7 +267,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 			.add("showDFA", showDFA)
 			.render();
 
-		writeFile(tmpdir, "Test.php", output);
+		writeFile(testdir, "Test.php", output);
 	}
 
 	private void writeParserTestFile(
@@ -277,6 +290,6 @@ public class BasePHPTest implements RuntimeTestSupport {
 			.add("trace", trace)
 			.render();
 
-		writeFile(tmpdir, "Test.php", output);
+		writeFile(testdir, "Test.php", output);
 	}
 }

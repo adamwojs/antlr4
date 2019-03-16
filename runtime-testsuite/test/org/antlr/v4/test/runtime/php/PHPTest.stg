@@ -1,6 +1,6 @@
 ComposerFile(runtimePath) ::= <<
 {
-  "name": "adamwojs/antlr4-runtime-testcase",
+  "name": "antlr/antlr4-runtime-testcase",
   "type": "library",
   "description": "ANTLR (ANother Tool for Language Recognition) 4 PHP runtime test case",
   "license": "MIT",
@@ -25,7 +25,7 @@ LexerTestFile(lexerName, showDFA) ::= <<
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/<lexerName>.php';
 
 use ANTLR\v4\Runtime\CommonTokenStream;
@@ -54,7 +54,7 @@ ParserTestFile(parserName, lexerName, listenerName, visitorName, parserStartRule
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/<listenerName>.php';
 require_once __DIR__ . '/<visitorName>.php';
 require_once __DIR__ . '/<lexerName>.php';
