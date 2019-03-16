@@ -6,14 +6,15 @@ ComposerFile(runtimePath) ::= <<
   "license": "MIT",
   "require": {
     "php": ">=7.2",
-    "adamwojs/antlr4-runtime": "dev-master"
+    "adamwojs/antlr4-runtime": "*"
   },
-  "autoload": {},
+  "autoload": {
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [
     {
-      "type": "vcs",
+      "type": "path",
       "url": "<runtimePath>"
     }
   ]

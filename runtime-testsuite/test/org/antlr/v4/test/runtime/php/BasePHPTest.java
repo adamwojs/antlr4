@@ -176,9 +176,11 @@ public class BasePHPTest implements RuntimeTestSupport {
 	}
 
 	protected boolean generateComposer() {
+		final String runtimePath = getClass().getClassLoader().getResource("PHP").getPath();
+
 		String output = filesTemplates
 			.getInstanceOf("ComposerFile")
-			.add("runtimePath", "file:///home/awojs/Projekty/antlr4/runtime/PHP")
+			.add("runtimePath", runtimePath)
 			.render();
 
 		writeFile(basedir, "composer.json", output);
