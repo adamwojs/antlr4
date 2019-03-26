@@ -39,43 +39,62 @@ public class BasePHPTest implements RuntimeTestSupport {
 	 * If error during parser execution, store stderr here; can't return stdout
 	 * and stderr. This doesn't trap errors from running antlr.
 	 */
-	protected String stderrDuringParse;
+	private String stderrDuringParse;
 
 	/**
 	 * Errors found while running antlr
 	 */
-	protected StringBuilder antlrToolErrors;
+	private StringBuilder antlrToolErrors;
 
 	/**
 	 * Templates of the files which are generated during test execution.
 	 */
-	protected STGroup filesTemplates = new STGroupFile(
+	private STGroup filesTemplates = new STGroupFile(
 		BasePHPTest.class.getResource("PHPTestFiles.stg")
 	);
 
 	@Override
 	public void testSetUp() throws Exception {
-		// new output dir for each test
-		String prop = System.getProperty("antlr-php-test-dir");
-		if (prop != null && prop.length() > 0) {
-			basedir = prop;
-		} else {
-			basedir = new File(System.getProperty("java.io.tmpdir"),  "/antlr").getAbsolutePath();
-		}
-
-		testdir = new File(basedir, getClass().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis()).getAbsolutePath();
+		basedir = getBaseDirPath();
+		testdir = getTestDirPath(basedir);
 
 		Files.createDirectories(Paths.get(testdir));
 
 		Path composerPath = Paths.get(basedir +  "/composer.json");
 		if (Files.notExists(composerPath)) {
 			boolean success = generateComposer();
-			assertTrue(success);
+			assertTrue("Error while generating composer.json file", success);
 			success = installDependencies();
-			assertTrue(success);
+			assertTrue("Error while installing dependencies", success);
 		}
 
 		antlrToolErrors = new StringBuilder();
+	}
+
+	private String getBaseDirPath() {
+		// new output dir for each test
+		String prop = System.getProperty("antlr-php-test-dir");
+		if (prop != null && prop.length() > 0) {
+			return prop;
+		}
+
+		return new File(System.getProperty("java.io.tmpdir"),  "/antlr").getAbsolutePath();
+	}
+
+	private String getTestDirName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getClass().getSimpleName());
+		sb.append("-");
+		sb.append(Thread.currentThread().getName());
+		sb.append("-");
+		sb.append(System.currentTimeMillis());
+
+		return sb.toString();
+	}
+
+	private String getTestDirPath(final String basedir) {
+		return new File(basedir, getTestDirName()).getAbsolutePath();
 	}
 
 	@Override
@@ -107,6 +126,7 @@ public class BasePHPTest implements RuntimeTestSupport {
 		if (antlrToolErrors.length() == 0) {
 			return null;
 		}
+
 		return antlrToolErrors.toString();
 	}
 
